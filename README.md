@@ -18,7 +18,7 @@ cd Oyster
 
 # License
 
-```shell
+```
     Oyster - The universal minigame framework for spigot servers.
     Copyright (C) 2021 SaltedFish Club
 
