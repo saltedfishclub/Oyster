@@ -28,6 +28,24 @@ public class Flag {
     public static final int PRIORITY_MEDIUM = 50;
     public static final int PRIORITY_LOW = 100;
     private String name;
+    /**
+     * 优先级。越低越高
+     */
     private int priority;
+    /**
+     * 触发策略。如 NOT_CONTAINS 则是正在交互/或者由 Mechanic 正在处理的人不包含这个 tag 的时候触发。
+     */
+    private Strategy trigStrategy;
+    /**
+     * 通常用于取消掉团队中的共享flag
+     */
+    private boolean disable;
+    /**
+     * Flag 类型。可能会携带额外数据
+     */
     private FlagType type;
+
+    public enum Strategy {
+        NOT_CONTAINS, CONTAINS
+    }
 }
