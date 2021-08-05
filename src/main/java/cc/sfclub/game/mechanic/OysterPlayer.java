@@ -20,9 +20,10 @@
  */
 
 package cc.sfclub.game.mechanic;
-import cc.sfclub.game.config.Locale;
+
 import cc.sfclub.game.mechanic.player.PlayerMechanic;
 import cc.sfclub.game.mechanic.team.Team;
+import cc.sfclub.game.module.i18n.Locale;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
