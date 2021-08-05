@@ -8,7 +8,6 @@
 </div>
 
 # Build
-
 ```shell
 git clone https://github.com/saltedfishclub/Oyster
 cd Oyster
