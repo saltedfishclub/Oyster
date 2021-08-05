@@ -1,0 +1,6 @@
+name: Oyster
+version: @version@
+main: cc.sfclub.game.Oyster
+api-version: 1.16
+description: Universal minigame framework.
+website: https://bukkit.rip/oyster
