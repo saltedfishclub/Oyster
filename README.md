@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/github/license/saltedfishclub/Oyster"> <img src="https://img.shields.io/github/workflow/status/saltedfishclub/Oni/Java%20CI%20with%20Gradle"> <img src="https://img.shields.io/discord/612522451200638991"> <img src="https://img.shields.io/tokei/lines/github/saltedfishclub/Oyster">
   </p>
 </div>
-
+<br />
 # Build
 ```shell
 git clone https://github.com/saltedfishclub/Oyster
