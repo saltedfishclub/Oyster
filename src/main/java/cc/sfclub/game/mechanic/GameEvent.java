@@ -21,4 +21,9 @@
 
 package cc.sfclub.game.mechanic;
 public abstract class GameEvent {
+    Scope scope;
+
+    public enum Scope {
+        GAME, FLAG, TEAM, PLAYER
+    }
 }
