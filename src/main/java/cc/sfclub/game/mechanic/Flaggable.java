@@ -19,22 +19,23 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.team;
-import cc.sfclub.game.mechanic.EventReactor;
-import cc.sfclub.game.mechanic.OysterPlayer;
+package cc.sfclub.game.mechanic;
+
 import cc.sfclub.game.mechanic.flag.Flag;
-import org.bukkit.ChatColor;
+import lombok.NonNull;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-@ApiStatus.AvailableSince("0.0.1")
-public interface Team extends EventReactor {
-    Set<OysterPlayer> getPlayers();
-
+@ApiStatus.AvailableSince("0.1.0")
+public interface Flaggable {
     Set<Flag> getFlags();
 
-    String getName();
+    void removeFlag(Flag flag);
 
-    ChatColor getColor();
+    boolean addFlag(Flag flag);
+
+    @Nullable
+    Flag getFlag(@NonNull String name);
 }

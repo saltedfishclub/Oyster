@@ -21,27 +21,48 @@
 
 package cc.sfclub.game.mechanic;
 
+import cc.sfclub.game.mechanic.flag.Flag;
 import cc.sfclub.game.mechanic.player.PlayerMechanic;
 import cc.sfclub.game.mechanic.team.Team;
 import cc.sfclub.game.module.i18n.Locale;
+import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 @ApiStatus.AvailableSince("0.0.1")
-@RequiredArgsConstructor
 @Getter
-public class OysterPlayer implements Tickable {
+public class OysterPlayer implements Tickable, Flaggable {
     private final Locale locale;
     private final UUID bukkitPlayer;
     private final PlayerMechanic mechanic;
+    @Nullable
     private final Team team;
+    @Getter(AccessLevel.PRIVATE)
+    private final Set<Flag> sortedFlags;
+
+    public OysterPlayer(Locale locale, UUID bukkitPlayer, PlayerMechanic mechanic, Team team, Collection<Flag> flags) {
+        this.locale = locale;
+        this.bukkitPlayer = bukkitPlayer;
+        this.mechanic = mechanic;
+        this.team = team;
+        sortedFlags = new TreeSet<Flag>((a, b) -> {
+            int v = a.getPriority() - b.getPriority();
+            if (v == 0) {
+                return 1;
+            }
+            return v;
+        });
+    }
 
     public String translate(String key, Object... args) {
         return String.format(locale.getLocale(getBukkitPlayer().getLocale()).getOrDefault(key, ChatColor.RED + key + ChatColor.RESET), args);
@@ -62,6 +83,19 @@ public class OysterPlayer implements Tickable {
         return getBukkitPlayer() != null;
     }
 
+    @Override
+    @Nullable
+    public Flag getFlag(@NonNull String name) {
+        return sortedFlags.stream()
+                .filter(e -> e.getName().equals(name))
+                .findFirst()
+                .orElse(team.getFlags()
+                        .stream()
+                        .filter(e -> e.getName().equals(name))
+                        .findFirst()
+                        .orElse(null));
+    }
+
     /**
      * Nullable when player isn't online.
      *
@@ -70,5 +104,20 @@ public class OysterPlayer implements Tickable {
     @Nullable
     public Player getBukkitPlayer() {
         return Bukkit.getPlayer(bukkitPlayer);
+    }
+
+    @Override
+    public Set<Flag> getFlags() {
+        return sortedFlags;
+    }
+
+    @Override
+    public void removeFlag(Flag flag) {
+        sortedFlags.remove(flag);
+    }
+
+    @Override
+    public boolean addFlag(Flag flag) {
+        return sortedFlags.add(flag);
     }
 }
