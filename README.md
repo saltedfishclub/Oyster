@@ -8,6 +8,11 @@
 </div>
 <br />
 
+# What
+
+It is a flexible framework that attempts to reduce costs for developing a game in bukkit.  
+Mainly focusing on multiplayer competition or PvE games (Invasive games)
+
 # Build
 
 ```shell
