@@ -20,9 +20,11 @@
  */
 
 package cc.sfclub.game.mechanic.team;
+import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.AvailableSince("0.0.1")
+@Getter
 public class Flag {
     public static final int PRIORITY_HIGH = 1;
     public static final int PRIORITY_MEDIUM = 50;
