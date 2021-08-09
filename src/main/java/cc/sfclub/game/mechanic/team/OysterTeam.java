@@ -19,34 +19,47 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.flag;
+package cc.sfclub.game.mechanic.team;
 
+import cc.sfclub.game.mechanic.EventReactor;
+import cc.sfclub.game.mechanic.Flaggable;
+import cc.sfclub.game.mechanic.GameEvent;
+import cc.sfclub.game.mechanic.flag.Flag;
 import cc.sfclub.game.mechanic.player.OysterPlayer;
+import lombok.Getter;
+import lombok.NonNull;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 @ApiStatus.AvailableSince("0.0.1")
-public abstract class FlagType {
-    private final Flag.Strategy trigStrategy;
+@Getter
+public class OysterTeam implements EventReactor, Flaggable {
+    private final Set<OysterPlayer> players;
+    private final Set<Flag> flags;
+    private final String name;
+    private final ChatColor color;
+    private final TeamMechanic mechanic;
 
-    public FlagType(Flag.Strategy strategy) {
-        trigStrategy = strategy;
+    @Override
+    public void removeFlag(Flag flag) {
+        flags.remove(flag);
     }
 
-    public abstract String getName();
+    @Override
+    public boolean addFlag(Flag flag) {
+        return flags.add(flag);
+    }
 
-    /**
-     * Only call it like player/team.getType().canRun
-     *
-     * @param target
-     * @return
-     */
-    public boolean canRun(OysterPlayer target) {
-        //todo specators
-        Flag flag = target.getFlag(getName());
-        if (flag == null) {
-            return trigStrategy == Flag.Strategy.NOT_CONTAINS;
-        } else {
-            return trigStrategy == Flag.Strategy.CONTAINS;
-        }
+    @Override
+    public @Nullable Flag getFlag(@NonNull String name) {
+        return null; //todo
+    }
+
+    @Override
+    public void onEvent(GameEvent event) {
+
     }
 }

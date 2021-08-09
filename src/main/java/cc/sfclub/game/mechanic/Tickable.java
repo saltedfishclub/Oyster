@@ -20,6 +20,6 @@
  */
 
 package cc.sfclub.game.mechanic;
-public interface Tickable {
-    void onUpdate(long time);
+public interface Tickable<T> {
+    void onUpdate(T object);
 }

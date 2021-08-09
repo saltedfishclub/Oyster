@@ -19,11 +19,12 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.mechanic.player;
 
+import cc.sfclub.game.mechanic.Flaggable;
+import cc.sfclub.game.mechanic.Tickable;
 import cc.sfclub.game.mechanic.flag.Flag;
-import cc.sfclub.game.mechanic.player.PlayerMechanic;
-import cc.sfclub.game.mechanic.team.Team;
+import cc.sfclub.game.mechanic.team.OysterTeam;
 import cc.sfclub.game.module.i18n.Locale;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,16 +42,16 @@ import java.util.UUID;
 
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
-public class OysterPlayer implements Tickable, Flaggable {
+public class OysterPlayer implements Tickable<OysterPlayer>, Flaggable {
     private final Locale locale;
     private final UUID bukkitPlayer;
     private final PlayerMechanic mechanic;
     @Nullable
-    private final Team team;
+    private final OysterTeam team;
     @Getter(AccessLevel.PRIVATE)
     private final Set<Flag> sortedFlags;
 
-    public OysterPlayer(Locale locale, UUID bukkitPlayer, PlayerMechanic mechanic, Team team, Collection<Flag> flags) {
+    public OysterPlayer(Locale locale, UUID bukkitPlayer, PlayerMechanic mechanic, OysterTeam team, Collection<Flag> flags) {
         this.locale = locale;
         this.bukkitPlayer = bukkitPlayer;
         this.mechanic = mechanic;
@@ -75,8 +76,8 @@ public class OysterPlayer implements Tickable, Flaggable {
     }
 
     @Override
-    public void onUpdate(long time) {
-        mechanic.onUpdate(time);
+    public void onUpdate(OysterPlayer player) {
+        mechanic.onUpdate(player);
     }
 
     public boolean isOnline() {

@@ -18,9 +18,10 @@
  *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  *     USA
  */
-package cc.sfclub.game.mechanic.player;
+
+package cc.sfclub.game.mechanic.team;
 
 import cc.sfclub.game.mechanic.Mechanic;
 
-public abstract class PlayerMechanic implements Mechanic<OysterPlayer> {
+public abstract class TeamMechanic implements Mechanic<OysterTeam> {
 }
