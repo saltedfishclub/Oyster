@@ -28,6 +28,7 @@ import cc.sfclub.game.mechanic.flag.Flag;
 import cc.sfclub.game.mechanic.player.OysterPlayer;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +37,7 @@ import java.util.Set;
 
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
+@RequiredArgsConstructor
 public class OysterTeam implements EventReactor, Flaggable {
     private final Set<OysterPlayer> players;
     private final Set<Flag> flags;
