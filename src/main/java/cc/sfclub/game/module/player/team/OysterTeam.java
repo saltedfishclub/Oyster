@@ -47,6 +47,10 @@ public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam>
     private final ChatColor color;
     private final TeamMechanic mechanic;
 
+    public void broadcastMessages(String message, Object... args) {
+        players.forEach(e -> e.sendTranslated(message, args));
+    }
+
     @Override
     public void removeFlag(Flag<OysterPlayer> flag) {
         flags.remove(flag);

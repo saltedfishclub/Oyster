@@ -41,13 +41,17 @@ import java.util.stream.Collectors;
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     private final State state;
     @Builder.Default
+    @Getter
     private final GameScope scope = new AnywhereScope();
     @Builder.Default
+    @Getter
     private final List<OysterPlayer> players = new ArrayList<>();
     @Builder.Default
+    @Getter
     private final Locale locale = new Locale();
 
     @Builder.Default
+    @Getter
     private final Map<String, OysterTeam> teams = new HashMap<>();
     @Getter
     @Builder.Default
@@ -60,6 +64,10 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     });
     @Builder.Default
     private final GameMechanic mechanic = new EmptyGameMechanic();
+
+    public <T> T getStateAs(Class<T> t) {
+        return t.cast(state);
+    }
 
     @Override
     public void onEvent(GameEvent event) {
@@ -91,6 +99,10 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
         return rules.stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst().orElse(null);
+    }
+
+    public void broadcastMessage(String key, Object args) {
+        players.forEach(e -> e.sendTranslated(key, args));
     }
 
     @Override
