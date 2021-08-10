@@ -33,31 +33,38 @@ import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
 @RequiredArgsConstructor
-public class OysterTeam implements Flaggable, Mechanic<OysterTeam> {
+public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam> {
     private final Set<OysterPlayer> players;
-    private final Set<Flag> flags;
+    private final Set<Flag<OysterPlayer>> flags;
     private final String name;
     private final ChatColor color;
     private final TeamMechanic mechanic;
 
     @Override
-    public void removeFlag(Flag flag) {
+    public void removeFlag(Flag<OysterPlayer> flag) {
         flags.remove(flag);
     }
 
     @Override
-    public boolean addFlag(Flag flag) {
+    public boolean addFlag(Flag<OysterPlayer> flag) {
         return flags.add(flag);
     }
 
     @Override
-    public @Nullable Flag getFlag(@NonNull String name) {
-        return null; //todo
+    public @Nullable Flag<OysterPlayer> getFlagExact(@NonNull String name) {
+        return flags.stream().filter(e -> e.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+        return regex ? flags.stream().filter(e -> e.getName().matches(prefixOrRegex)).collect(Collectors.toList()) : flags.stream().filter(e -> e.getName().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 
     @Override

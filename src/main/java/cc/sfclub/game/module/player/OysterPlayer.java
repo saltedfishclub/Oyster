@@ -36,10 +36,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
@@ -50,14 +47,14 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     @Nullable
     private final OysterTeam team;
     @Getter(AccessLevel.PRIVATE)
-    private final Set<Flag> sortedFlags;
+    private final Set<Flag<OysterPlayer>> sortedFlags;
 
     public OysterPlayer(Locale locale, UUID bukkitPlayer, PlayerMechanic mechanic, OysterTeam team, Collection<Flag> flags) {
         this.locale = locale;
         this.bukkitPlayer = bukkitPlayer;
         this.mechanic = mechanic;
         this.team = team;
-        sortedFlags = new TreeSet<Flag>((a, b) -> {
+        sortedFlags = new TreeSet<>((a, b) -> {
             int v = a.getPriority() - b.getPriority();
             if (v == 0) {
                 return 1;
@@ -87,7 +84,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
 
     @Override
     @Nullable
-    public Flag getFlag(@NonNull String name) {
+    public Flag<OysterPlayer> getFlagExact(@NonNull String name) {
         return sortedFlags.stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst()
@@ -96,6 +93,11 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
                         .filter(e -> e.getName().equals(name))
                         .findFirst()
                         .orElse(null));
+    }
+
+    @Override
+    public List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+        return null;
     }
 
     /**
@@ -109,7 +111,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     }
 
     @Override
-    public Set<Flag> getFlags() {
+    public Set<Flag<OysterPlayer>> getFlags() {
         return sortedFlags;
     }
 

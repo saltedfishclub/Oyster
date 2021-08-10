@@ -35,6 +35,7 @@ import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Builder
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
@@ -86,9 +87,14 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     }
 
     @Override
-    public @Nullable Flag<OysterGame> getFlag(@NonNull String name) {
+    public @Nullable Flag<OysterGame> getFlagExact(@NonNull String name) {
         return rules.stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst().orElse(null);
+    }
+
+    @Override
+    public List<Flag<OysterGame>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+        return regex ? rules.stream().filter(e -> e.getName().matches(prefixOrRegex)).collect(Collectors.toList()) : rules.stream().filter(e -> e.getName().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 }

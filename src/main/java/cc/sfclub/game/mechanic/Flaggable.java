@@ -26,6 +26,7 @@ import lombok.NonNull;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Set;
 
 @ApiStatus.AvailableSince("0.1.0")
@@ -37,5 +38,7 @@ public interface Flaggable<T extends Tickable<?>> {
     boolean addFlag(Flag<T> flag);
 
     @Nullable
-    Flag<T> getFlag(@NonNull String name);
+    Flag<T> getFlagExact(@NonNull String name);
+
+    List<Flag<T>> matchingFlags(@NonNull String prefixOrRegex, boolean regex);
 }

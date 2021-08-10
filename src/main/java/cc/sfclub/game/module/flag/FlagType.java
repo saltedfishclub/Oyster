@@ -48,7 +48,7 @@ public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
     public boolean canRun(OysterPlayer target) {
         //todo specators
         if (trigStrategy == Flag.Strategy.ALWAYS) return true;
-        Flag flag = target.getFlag(getName());
+        Flag flag = target.getFlagExact(getName());
         if (flag == null) {
             return trigStrategy == Flag.Strategy.NOT_CONTAINS;
         } else {
