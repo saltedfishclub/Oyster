@@ -49,7 +49,16 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:21.0.1'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
+task generateI18NBundle(type: Zip,dependsOn: processResources) {
+    from 'translation'
+    archiveName 'locale.zip'
+    destinationDir file('build/resources/i18n/')
+}
 
+jar.dependsOn generateI18NBundle
+jar {
+    from ("build/resources/i18n")
+}
 def getCheckedOutGitCommitHash() {
     def gitFolder = "$projectDir/.git/"
     def takeFromHash = 7
@@ -72,6 +81,7 @@ def buildBy = System.getProperty("user.name")
 def commitHash = getCheckedOutGitCommitHash()
 
 processResources {
+
     from(sourceSets.main.resources.srcDirs) {
         duplicatesStrategy DuplicatesStrategy.INCLUDE
         filter ReplaceTokens, tokens: [
