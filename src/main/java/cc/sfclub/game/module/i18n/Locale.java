@@ -20,6 +20,7 @@
  */
 package cc.sfclub.game.module.i18n;
 
+import cc.sfclub.game.util.Log;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.ApiStatus;
@@ -41,13 +42,11 @@ public class Locale {
         return locales.getOrDefault(locale, fallback);
     }
 
-    public void registerLocale(String lang, Map<String, String> locale) throws LocaleExistsException {
+    public void registerLocale(String lang, Map<String, String> locale) {
+        if (locales.containsKey(lang)) {
+            Log.warn("Duplicate locale was found! " + lang);
+        }
         locales.put(lang, locale);
     }
 
-    public static class LocaleExistsException extends Exception {
-        public LocaleExistsException(String msg) {
-            super(msg + " was already registered.");
-        }
-    }
 }
