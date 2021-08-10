@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.module.game;
 
+import cc.sfclub.game.api.event.GameStateSwitched;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.module.flag.Flag;
@@ -28,9 +29,11 @@ import cc.sfclub.game.module.game.region.AnywhereScope;
 import cc.sfclub.game.module.game.region.GameScope;
 import cc.sfclub.game.module.player.OysterPlayer;
 import cc.sfclub.game.module.player.team.OysterTeam;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,15 +41,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @ApiStatus.AvailableSince("0.1.0")
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
-    private final State state;
+    private final String name;
     @Builder.Default
     @Getter
     private final GameScope scope = new AnywhereScope();
     @Builder.Default
     @Getter
     private final List<OysterPlayer> players = new ArrayList<>();
+    @Getter
+    private State state;
 
     @Builder.Default
     @Getter
@@ -62,6 +67,10 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     });
     @Builder.Default
     private final GameMechanic mechanic = new EmptyGameMechanic();
+
+    {
+        // TODO: 10/08/2021 Register itself into OysterGameManager
+    }
 
     public <T> T getStateAs(Class<T> t) {
         return t.cast(state);
@@ -85,6 +94,11 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     @Override
     public void removeFlag(Flag<OysterGame> flag) {
         rules.remove(flag);
+    }
+
+    public void switchState(State newState) {
+        Bukkit.getPluginManager().callEvent(new GameStateSwitched(this, this.state, newState));
+        this.state = newState;
     }
 
     @Override

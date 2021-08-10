@@ -19,20 +19,12 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.module.game.region;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.bukkit.event.Event;
-import org.jetbrains.annotations.ApiStatus;
+public enum Warps {
+    SPAWN("SPAWN"),
+    LOBBY("LOBBY");
 
-@Getter
-@AllArgsConstructor
-@ApiStatus.AvailableSince("0.1.0")
-public abstract class GameEvent extends Event {
-    private final Scope scope;
-
-    public enum Scope {
-        GAME, FLAG, TEAM, PLAYER
+    Warps(String warp) {
     }
 }

@@ -19,20 +19,22 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.api.event;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import cc.sfclub.game.module.game.OysterGame;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.ApiStatus;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
-@Getter
-@AllArgsConstructor
-@ApiStatus.AvailableSince("0.1.0")
-public abstract class GameEvent extends Event {
-    private final Scope scope;
+@RequiredArgsConstructor
+public class OysterEvent extends Event {
+    private final HandlerList handlerList = new HandlerList();
+    private final OysterGame game;
 
-    public enum Scope {
-        GAME, FLAG, TEAM, PLAYER
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return handlerList;
     }
 }
