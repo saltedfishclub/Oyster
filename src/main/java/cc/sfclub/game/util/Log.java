@@ -34,7 +34,7 @@ public class Log {
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + message);
     }
 
-    public static void transInfo(String message, Object args) {
+    public static void transInfo(String message, Object... args) {
         info(defaultLocale.translate(defaultLang, message, args));
     }
 
