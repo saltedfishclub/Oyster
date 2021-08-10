@@ -20,8 +20,14 @@
  */
 
 package cc.sfclub.game.mechanic;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public abstract class GameEvent {
-    Scope scope;
+    private final Scope scope;
 
     public enum Scope {
         GAME, FLAG, TEAM, PLAYER
