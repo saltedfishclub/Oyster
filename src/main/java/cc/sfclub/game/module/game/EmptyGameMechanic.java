@@ -19,16 +19,18 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.team;
+package cc.sfclub.game.module.game;
 
-import cc.sfclub.game.mechanic.Mechanic;
+import cc.sfclub.game.mechanic.GameEvent;
 
-public abstract class TeamMechanic implements Mechanic<OysterTeam> {
+public class EmptyGameMechanic extends GameMechanic {
+
     @Override
-    public void onUpdate(OysterTeam object) {
-        
-        tick(object);
+    public void tick(OysterGame game) {
+
     }
 
-    public abstract void tick(OysterTeam team);
+    @Override
+    public void onEvent(GameEvent event) {
+    }
 }

@@ -18,15 +18,19 @@
  *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  *     USA
  */
-package cc.sfclub.game.mechanic.player;
+
+package cc.sfclub.game.module.game;
 
 import cc.sfclub.game.mechanic.Mechanic;
+import org.jetbrains.annotations.ApiStatus;
 
-public abstract class PlayerMechanic implements Mechanic<OysterPlayer> {
+@ApiStatus.AvailableSince("0.1.0")
+public abstract class GameMechanic implements Mechanic<OysterGame> {
     @Override
-    public final void onUpdate(OysterPlayer object) {
+    public void onUpdate(OysterGame object) {
+        object.getRules().forEach(e -> e.getType().tick(object));
         tick(object);
     }
 
-    public abstract void tick(OysterPlayer player);
+    public abstract void tick(OysterGame game);
 }

@@ -19,35 +19,16 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.flag;
+package cc.sfclub.game.module.player.team;
 
-import cc.sfclub.game.mechanic.player.OysterPlayer;
-import org.jetbrains.annotations.ApiStatus;
+import cc.sfclub.game.mechanic.Mechanic;
 
-@ApiStatus.AvailableSince("0.0.1")
-public abstract class FlagType {
-    private final Flag.Strategy trigStrategy;
-
-    public FlagType(Flag.Strategy strategy) {
-        trigStrategy = strategy;
+public abstract class TeamMechanic implements Mechanic<OysterTeam> {
+    @Override
+    public void onUpdate(OysterTeam object) {
+        
+        tick(object);
     }
 
-    public abstract String getName();
-
-    /**
-     * Only call it like player/team.getType().canRun
-     *
-     * @param target
-     * @return
-     */
-    public boolean canRun(OysterPlayer target) {
-        //todo specators
-        if (trigStrategy == Flag.Strategy.ALWAYS) return true;
-        Flag flag = target.getFlag(getName());
-        if (flag == null) {
-            return trigStrategy == Flag.Strategy.NOT_CONTAINS;
-        } else {
-            return trigStrategy == Flag.Strategy.CONTAINS;
-        }
-    }
+    public abstract void tick(OysterTeam team);
 }

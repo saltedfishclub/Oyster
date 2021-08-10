@@ -19,8 +19,9 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.flag;
+package cc.sfclub.game.module.flag;
 
+import cc.sfclub.game.mechanic.Tickable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.ApiStatus;
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Flag {
+public class Flag<T extends Tickable<?>> {
     public static final int PRIORITY_HIGH = 1;
     public static final int PRIORITY_MEDIUM = 50;
     public static final int PRIORITY_LOW = 100;
@@ -51,7 +52,7 @@ public class Flag {
     /**
      * Flag 类型。可能会携带额外数据
      */
-    private final FlagType type;
+    private final FlagType<T> type;
 
     public enum Strategy {
         NOT_CONTAINS, CONTAINS, ALWAYS

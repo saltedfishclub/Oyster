@@ -19,23 +19,40 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.module.flag;
 
-import cc.sfclub.game.module.flag.Flag;
-import lombok.NonNull;
+import cc.sfclub.game.mechanic.Tickable;
+import cc.sfclub.game.module.player.OysterPlayer;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
+@ApiStatus.AvailableSince("0.0.1")
+public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
+    private final Flag.Strategy trigStrategy;
 
-@ApiStatus.AvailableSince("0.1.0")
-public interface Flaggable<T extends Tickable<?>> {
-    Set<Flag<T>> getFlags();
+    public FlagType(Flag.Strategy strategy) {
+        trigStrategy = strategy;
+    }
 
-    void removeFlag(Flag<T> flag);
+    public abstract String getName();
 
-    boolean addFlag(Flag<T> flag);
+    public void tick(T target) {
 
-    @Nullable
-    Flag<T> getFlag(@NonNull String name);
+    }
+
+    /**
+     * Only call it like player/team.getType().canRun
+     *
+     * @param target
+     * @return
+     */
+    public boolean canRun(OysterPlayer target) {
+        //todo specators
+        if (trigStrategy == Flag.Strategy.ALWAYS) return true;
+        Flag flag = target.getFlag(getName());
+        if (flag == null) {
+            return trigStrategy == Flag.Strategy.NOT_CONTAINS;
+        } else {
+            return trigStrategy == Flag.Strategy.CONTAINS;
+        }
+    }
 }

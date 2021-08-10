@@ -18,24 +18,16 @@
  *     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
  *     USA
  */
+package cc.sfclub.game.module.player;
 
-package cc.sfclub.game.mechanic;
+import cc.sfclub.game.mechanic.Mechanic;
+import cc.sfclub.game.mechanic.OysterEntity;
 
-import cc.sfclub.game.module.flag.Flag;
-import lombok.NonNull;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+public abstract class PlayerMechanic extends OysterEntity<OysterPlayer> implements Mechanic<OysterPlayer> {
+    @Override
+    public final void onUpdate(OysterPlayer object) {
+        tick(object);
+    }
 
-import java.util.Set;
-
-@ApiStatus.AvailableSince("0.1.0")
-public interface Flaggable<T extends Tickable<?>> {
-    Set<Flag<T>> getFlags();
-
-    void removeFlag(Flag<T> flag);
-
-    boolean addFlag(Flag<T> flag);
-
-    @Nullable
-    Flag<T> getFlag(@NonNull String name);
+    public abstract void tick(OysterPlayer player);
 }

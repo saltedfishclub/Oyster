@@ -19,13 +19,13 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.player;
+package cc.sfclub.game.module.player;
 
 import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.mechanic.OysterEntity;
-import cc.sfclub.game.mechanic.flag.Flag;
-import cc.sfclub.game.mechanic.team.OysterTeam;
+import cc.sfclub.game.module.flag.Flag;
 import cc.sfclub.game.module.i18n.Locale;
+import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
