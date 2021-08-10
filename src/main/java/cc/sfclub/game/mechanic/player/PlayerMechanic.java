@@ -23,4 +23,10 @@ package cc.sfclub.game.mechanic.player;
 import cc.sfclub.game.mechanic.Mechanic;
 
 public abstract class PlayerMechanic implements Mechanic<OysterPlayer> {
+    @Override
+    public final void onUpdate(OysterPlayer object) {
+        tick(object);
+    }
+
+    public abstract void tick(OysterPlayer player);
 }

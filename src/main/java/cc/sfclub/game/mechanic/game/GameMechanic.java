@@ -19,16 +19,18 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.team;
+package cc.sfclub.game.mechanic.game;
 
 import cc.sfclub.game.mechanic.Mechanic;
+import cc.sfclub.game.module.game.OysterGame;
+import org.jetbrains.annotations.ApiStatus;
 
-public abstract class TeamMechanic implements Mechanic<OysterTeam> {
+@ApiStatus.AvailableSince("0.1.0")
+public abstract class GameMechanic implements Mechanic<OysterGame> {
     @Override
-    public void onUpdate(OysterTeam object) {
-        
+    public final void onUpdate(OysterGame object) {
         tick(object);
     }
 
-    public abstract void tick(OysterTeam team);
+    public abstract void tick(OysterGame game);
 }

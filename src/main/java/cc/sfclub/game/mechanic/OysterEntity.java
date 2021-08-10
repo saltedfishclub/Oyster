@@ -19,16 +19,12 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic.team;
+package cc.sfclub.game.mechanic;
 
-import cc.sfclub.game.mechanic.Mechanic;
+import org.bukkit.entity.Entity;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class TeamMechanic implements Mechanic<OysterTeam> {
-    @Override
-    public void onUpdate(OysterTeam object) {
-        
-        tick(object);
-    }
-
-    public abstract void tick(OysterTeam team);
+public abstract class OysterEntity<T> implements Flaggable, EventReactor, Tickable<T> {
+    @Nullable
+    public abstract Entity getAsEntity();
 }

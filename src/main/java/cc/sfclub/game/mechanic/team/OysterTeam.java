@@ -21,9 +21,9 @@
 
 package cc.sfclub.game.mechanic.team;
 
-import cc.sfclub.game.mechanic.EventReactor;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.GameEvent;
+import cc.sfclub.game.mechanic.Mechanic;
 import cc.sfclub.game.mechanic.flag.Flag;
 import cc.sfclub.game.mechanic.player.OysterPlayer;
 import lombok.Getter;
@@ -38,7 +38,7 @@ import java.util.Set;
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
 @RequiredArgsConstructor
-public class OysterTeam implements EventReactor, Flaggable {
+public class OysterTeam implements Flaggable, Mechanic<OysterTeam> {
     private final Set<OysterPlayer> players;
     private final Set<Flag> flags;
     private final String name;
@@ -62,6 +62,11 @@ public class OysterTeam implements EventReactor, Flaggable {
 
     @Override
     public void onEvent(GameEvent event) {
+        mechanic.onEvent(event);
+    }
 
+    @Override
+    public void onUpdate(OysterTeam object) {
+        mechanic.onUpdate(object);
     }
 }

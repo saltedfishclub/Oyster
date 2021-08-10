@@ -21,8 +21,8 @@
 
 package cc.sfclub.game.mechanic.player;
 
-import cc.sfclub.game.mechanic.Flaggable;
-import cc.sfclub.game.mechanic.Tickable;
+import cc.sfclub.game.mechanic.GameEvent;
+import cc.sfclub.game.mechanic.OysterEntity;
 import cc.sfclub.game.mechanic.flag.Flag;
 import cc.sfclub.game.mechanic.team.OysterTeam;
 import cc.sfclub.game.module.i18n.Locale;
@@ -31,6 +31,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +43,7 @@ import java.util.UUID;
 
 @ApiStatus.AvailableSince("0.0.1")
 @Getter
-public class OysterPlayer implements Tickable<OysterPlayer>, Flaggable {
+public class OysterPlayer extends OysterEntity<OysterPlayer> {
     private final Locale locale;
     private final UUID bukkitPlayer;
     private final PlayerMechanic mechanic;
@@ -120,5 +121,16 @@ public class OysterPlayer implements Tickable<OysterPlayer>, Flaggable {
     @Override
     public boolean addFlag(Flag flag) {
         return sortedFlags.add(flag);
+    }
+
+    @Override
+    public void onEvent(GameEvent event) {
+        mechanic.onEvent(event);
+    }
+
+    @Nullable
+    @Override
+    public Entity getAsEntity() {
+        return getBukkitPlayer();
     }
 }
