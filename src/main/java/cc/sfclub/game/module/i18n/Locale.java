@@ -43,11 +43,11 @@ public class Locale {
     }
 
     public String translateNoArg(String locale, String key) {
-        return getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, key));
+        return ChatColor.translateAlternateColorCodes('&', getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, key)));
     }
 
     public String translate(String locale, String key, Object... args) {
-        return String.format(getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args);
+        return ChatColor.translateAlternateColorCodes('&', String.format(getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args));
     }
 
     public void registerLocale(String lang, Map<String, String> locale) {
