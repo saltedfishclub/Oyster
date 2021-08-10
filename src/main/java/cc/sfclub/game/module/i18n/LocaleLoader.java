@@ -41,20 +41,21 @@ public class LocaleLoader {
                 Log.warn("Invalid file: " + ze.getName());
                 continue;
             }
-
-            if (fn[0].equals("default")) {
+            String fileName = fn[0];
+            if (fileName.startsWith("default_")) {
                 fallback = parseAsMap(read(zipFile, ze));
-            } else {
-                locales.put(fn[0], parseAsMap(read(zipFile, ze)));
-                Log.debug("Loaded locale: " + fn[0]);
+                locales.put(fileName.replaceFirst("default_", ""), fallback);
+                continue;
             }
+            locales.put(fileName, parseAsMap(read(zipFile, ze)));
+            Log.debug("Loaded locale: " + fn[0]);
         }
         Log.debug(locales.entrySet().size() + " was loaded.");
         return new Locale(fallback, locales);
     }
 
     private static final Map<String, String> parseAsMap(String str) {
-        return Arrays.stream(str.split("\n")).collect(Collectors.toMap(e -> e.split("=")[0], e -> {
+        return Arrays.stream(str.split("\n")).filter(e -> !e.startsWith("#")).collect(Collectors.toMap(e -> e.split("=")[0], e -> {
             String[] arr = e.split("=");
             if (arr.length == 2) {
                 return arr[1];

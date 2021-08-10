@@ -31,11 +31,16 @@ public final class Oyster extends JavaPlugin {
     @Override
     public void onEnable() {
         Log.info(getDescription().getDescription());
-
+        Log.info("Extracting Internal Locales...");
+        extractLangs();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    private void extractLangs() {
+        saveResource("langs.zip", true);
     }
 }
