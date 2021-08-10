@@ -21,6 +21,9 @@
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
+
 plugins {
     id 'java'
     id "com.github.johnrengelman.shadow" version "7.0.0"
@@ -67,6 +70,7 @@ def getCheckedOutGitCommitHash() {
 def buildDate = new Date().toGMTString()
 def buildBy = System.getProperty("user.name")
 def commitHash = getCheckedOutGitCommitHash()
+
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         duplicatesStrategy DuplicatesStrategy.INCLUDE

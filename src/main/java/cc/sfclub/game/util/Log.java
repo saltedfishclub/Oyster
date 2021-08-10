@@ -20,14 +20,26 @@
  */
 
 package cc.sfclub.game.util;
+import cc.sfclub.game.module.i18n.Locale;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 
 public class Log {
+    public static Locale defaultLocale;
     private static final String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + ChatColor.BOLD + "Oyster" + ChatColor.RESET + ChatColor.GRAY + "] ";
 
     public static void info(String message) {
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + message);
+    }
+
+    public static void transInfo(String message, Object args) {
+
+    }
+
+    public static void debug(String msg) {
+        if (Boolean.getBoolean("oyster.debug")) {
+            Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + ChatColor.UNDERLINE + msg);
+        }
     }
 
     public static void warn(String message) {
