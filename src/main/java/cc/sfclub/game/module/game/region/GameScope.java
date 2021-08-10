@@ -21,8 +21,12 @@
 
 package cc.sfclub.game.module.game.region;
 
-import cc.sfclub.game.module.player.OysterPlayer;
+import org.bukkit.Location;
 
 public interface GameScope {
-    boolean isInScope(OysterPlayer player);
+    boolean isInScope(Location location);
+
+    Location getWarp(String warpName);
+
+    void setWarp(String warpName, Location location);
 }

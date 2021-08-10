@@ -21,11 +21,21 @@
 
 package cc.sfclub.game.module.game.region;
 
-import cc.sfclub.game.module.player.OysterPlayer;
+import org.bukkit.Location;
 
 public class AnywhereScope implements GameScope {
     @Override
-    public boolean isInScope(OysterPlayer player) {
+    public boolean isInScope(Location location) {
         return true;
+    }
+
+    @Override
+    public Location getWarp(String warpName) {
+        return null;
+    }
+
+    @Override
+    public void setWarp(String warpName, Location location) {
+
     }
 }
