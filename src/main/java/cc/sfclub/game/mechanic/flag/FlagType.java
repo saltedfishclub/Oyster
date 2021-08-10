@@ -42,6 +42,7 @@ public abstract class FlagType {
      */
     public boolean canRun(OysterPlayer target) {
         //todo specators
+        if (trigStrategy == Flag.Strategy.ALWAYS) return true;
         Flag flag = target.getFlag(getName());
         if (flag == null) {
             return trigStrategy == Flag.Strategy.NOT_CONTAINS;

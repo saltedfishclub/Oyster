@@ -54,6 +54,6 @@ public class Flag {
     private final FlagType type;
 
     public enum Strategy {
-        NOT_CONTAINS, CONTAINS
+        NOT_CONTAINS, CONTAINS, ALWAYS
     }
 }
