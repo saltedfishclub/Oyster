@@ -23,6 +23,9 @@ package cc.sfclub.game.module.game.region;
 
 import cc.sfclub.game.module.player.OysterPlayer;
 
-public interface GameScope {
-    boolean isInScope(OysterPlayer player);
+public class AnywhereScope implements GameScope {
+    @Override
+    public boolean isInScope(OysterPlayer player) {
+        return true;
+    }
 }
