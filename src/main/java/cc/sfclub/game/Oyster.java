@@ -21,8 +21,10 @@
 
 package cc.sfclub.game;
 
+import cc.sfclub.game.config.OysterConfig;
 import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.util.Log;
+import cc.sfclub.game.util.SimpleConfig;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
@@ -32,22 +34,30 @@ import java.util.zip.ZipFile;
 
 @ApiStatus.AvailableSince("0.1.0")
 public final class Oyster extends JavaPlugin {
-
+    private SimpleConfig<OysterConfig> wrappedConfig;
     @SneakyThrows
     @Override
+    @SuppressWarnings("all")
     public void onEnable() {
         Log.info(getDescription().getDescription());
         Log.info("Extracting Internal Locales...");
         extractLangs();
-        Log.defaultLang = "en_US";
-        Log.transInfo("oyster.loading", "");
-        Log.transInfo("oyster.err", "");
-        Log.transInfo("oyster.succ", "");
+        wrappedConfig = new SimpleConfig<>(getDataFolder(), OysterConfig.class);
+        wrappedConfig.saveDefault();
+        wrappedConfig.reloadConfig();
+        Log.defaultLang = getOysterConfig().getLanguage();
+        Log.transInfo("oyster.config.loaded", Log.defaultLang);
+
     }
+
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public OysterConfig getOysterConfig() {
+        return wrappedConfig.get();
     }
 
     @SneakyThrows

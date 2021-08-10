@@ -29,6 +29,7 @@ public class Log {
     public static String defaultLang;
     private static final String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + ChatColor.BOLD + "Oyster" + ChatColor.RESET + ChatColor.GRAY + "] ";
 
+    @Deprecated
     public static void info(String message) {
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + message);
     }
