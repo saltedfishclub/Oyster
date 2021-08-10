@@ -30,4 +30,5 @@ public interface GameScope {
 
     void setWarp(String warpName, Location location);
 
+    boolean hasWarp(String warp);
 }

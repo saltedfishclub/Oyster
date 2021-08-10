@@ -38,4 +38,9 @@ public class AnywhereScope implements GameScope {
     public void setWarp(String warpName, Location location) {
 
     }
+
+    @Override
+    public boolean hasWarp(String warp) {
+        return false;
+    }
 }

@@ -44,6 +44,7 @@ import java.util.stream.Collectors;
 @Builder(access = AccessLevel.PRIVATE)
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     private final String name;
+
     @Builder.Default
     @Getter
     private final GameScope scope = new AnywhereScope();
