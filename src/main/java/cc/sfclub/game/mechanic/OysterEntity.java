@@ -22,8 +22,10 @@
 package cc.sfclub.game.mechanic;
 
 import org.bukkit.entity.Entity;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+@ApiStatus.AvailableSince("0.1.0")
 public abstract class OysterEntity<T> implements Flaggable, EventReactor, Tickable<T> {
     @Nullable
     public abstract Entity getAsEntity();

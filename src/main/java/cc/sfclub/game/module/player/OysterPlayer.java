@@ -37,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-@ApiStatus.AvailableSince("0.0.1")
+@ApiStatus.AvailableSince("0.1.0")
 @Getter
 public class OysterPlayer extends OysterEntity<OysterPlayer> {
     private final Locale locale;

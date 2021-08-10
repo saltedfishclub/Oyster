@@ -22,6 +22,7 @@
 package cc.sfclub.game.module.i18n;
 
 import cc.sfclub.game.util.Log;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.io.InputStream;
 import java.util.*;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+@ApiStatus.AvailableSince("0.1.0")
 public class LocaleLoader {
     public static final Locale loadAsLocale(ZipFile zipFile) {
         Enumeration<? extends ZipEntry> entries = zipFile.entries();

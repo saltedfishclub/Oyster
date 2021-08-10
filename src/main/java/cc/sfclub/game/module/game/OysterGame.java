@@ -31,11 +31,13 @@ import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@ApiStatus.AvailableSince("0.1.0")
 @Builder
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     private final State state;

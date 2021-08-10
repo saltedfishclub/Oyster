@@ -22,7 +22,9 @@ package cc.sfclub.game.module.player;
 
 import cc.sfclub.game.mechanic.Mechanic;
 import cc.sfclub.game.mechanic.OysterEntity;
+import org.jetbrains.annotations.ApiStatus;
 
+@ApiStatus.AvailableSince("0.1.0")
 public abstract class PlayerMechanic extends OysterEntity<OysterPlayer> implements Mechanic<OysterPlayer> {
     @Override
     public final void onUpdate(OysterPlayer object) {

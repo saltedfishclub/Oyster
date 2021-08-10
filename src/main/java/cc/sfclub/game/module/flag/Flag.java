@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 
-@ApiStatus.AvailableSince("0.0.1")
+@ApiStatus.AvailableSince("0.1.0")
 @Getter
 @AllArgsConstructor
 @EqualsAndHashCode

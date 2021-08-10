@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@ApiStatus.AvailableSince("0.0.1")
+@ApiStatus.AvailableSince("0.1.0")
 @Getter
 @RequiredArgsConstructor
 public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam> {

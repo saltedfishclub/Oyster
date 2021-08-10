@@ -25,7 +25,7 @@ import cc.sfclub.game.mechanic.Tickable;
 import cc.sfclub.game.module.player.OysterPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
-@ApiStatus.AvailableSince("0.0.1")
+@ApiStatus.AvailableSince("0.1.0")
 public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
     private final Flag.Strategy trigStrategy;
 

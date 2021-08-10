@@ -23,6 +23,7 @@ package cc.sfclub.game.module.game;
 
 import cc.sfclub.game.mechanic.GameEvent;
 
+
 public class EmptyGameMechanic extends GameMechanic {
 
     @Override

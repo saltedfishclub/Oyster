@@ -23,9 +23,11 @@ package cc.sfclub.game.mechanic;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 @AllArgsConstructor
+@ApiStatus.AvailableSince("0.1.0")
 public abstract class GameEvent {
     private final Scope scope;
 

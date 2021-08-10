@@ -25,10 +25,12 @@ import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.util.Log;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.io.File;
 import java.util.zip.ZipFile;
 
+@ApiStatus.AvailableSince("0.1.0")
 public final class Oyster extends JavaPlugin {
 
     @SneakyThrows
