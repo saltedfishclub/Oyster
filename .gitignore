@@ -1,5 +1,13 @@
 # User-specific stuff
-.idea/
+.idea/modules
+.idea/compiler.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
+.idea/libraries-with-intellij-classes.xml
+.idea/misc.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
 
 *.iml
 *.ipr
