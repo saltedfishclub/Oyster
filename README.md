@@ -13,6 +13,13 @@
 It is a flexible framework that attempts to reduce costs for developing a game in bukkit.  
 Mainly focusing on multiplayer competition or PvE games (Invasive games)
 
+# Requirement
+
+Java 11 + Spigot Server.    
+Natively based on 1.16.5, older versions are likely to be supported.  
+[The REASON to Java 11](https://docs.microsoft.com/en-us/azure/developer/java/fundamentals/reasons-to-move-to-java-11)
+| [为什么我们要选择迁移到 Java 11](https://docs.microsoft.com/zh-cn/azure/developer/java/fundamentals/reasons-to-move-to-java-11)
+
 # Build
 
 ```shell
