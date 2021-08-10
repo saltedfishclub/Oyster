@@ -22,11 +22,10 @@
 package cc.sfclub.game.config;
 
 import lombok.Getter;
-import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 
-@ConfigSerializable
 @Getter
 public class OysterConfig {
-    private boolean debug;
-    private String language;
+    private final boolean debug = false;
+    private final String language = "zh_CN";
+    private final boolean updateCheck = true;
 }

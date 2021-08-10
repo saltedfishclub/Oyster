@@ -24,7 +24,6 @@ package cc.sfclub.game.task;
 import cc.sfclub.game.util.Log;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import lombok.SneakyThrows;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.net.URI;
@@ -37,25 +36,29 @@ public class UpdateChecker extends BukkitRunnable {
     private static final JsonParser jsonParser = new JsonParser();
     private final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(6)).build();
     private final String updateCheckUrl = "https://api.github.com/repos/saltedfishclub/Oyster/releases";
-
-    @SneakyThrows
+    private int retries = 0;
     @Override
     public void run() {
         Log.transInfo("oyster.update.checking", "");
-        var request = HttpRequest.newBuilder().GET().uri(new URI(updateCheckUrl)).build();
-        var body = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
-        var ja = jsonParser.parse(body == null ? "[]" : body);
-        for (JsonElement jsonElement : ja.getAsJsonArray()) {
-            var jo = jsonElement.getAsJsonObject();
-            var branch = jo.get("target_commitish").toString();
-            var name = jo.get("name").toString();
-            var tag = jo.get("tag_name").toString();
-            var isDraftOrPreRelease = jo.get("draft").getAsBoolean() || jo.get("prerelease").getAsBoolean();
-            if (isDraftOrPreRelease || !"release".equals(branch)) {
+        try {
+            var request = HttpRequest.newBuilder().GET().uri(new URI(updateCheckUrl)).build();
+            var body = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            var ja = jsonParser.parse(body == null ? "[]" : body);
+            for (JsonElement jsonElement : ja.getAsJsonArray()) {
+                var jo = jsonElement.getAsJsonObject();
+                var branch = jo.get("target_commitish").toString();
+                var name = jo.get("name").toString();
+                var tag = jo.get("tag_name").toString();
+                var isDraftOrPreRelease = jo.get("draft").getAsBoolean() || jo.get("prerelease").getAsBoolean();
+                if (isDraftOrPreRelease || !"release".equals(branch)) {
+                    return;
+                }
+                Log.transInfo("oyster.update.hint", tag, name);
                 return;
             }
-            Log.transInfo("oyster.update.hint", tag, name);
-            return;
+        } catch (Throwable t) {
+            retries++;
+            Log.transInfo("oyster.update.error", t.getMessage(), retries);
         }
     }
 }
