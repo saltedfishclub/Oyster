@@ -26,6 +26,7 @@ import org.bukkit.Bukkit;
 
 public class Log {
     public static Locale defaultLocale;
+    public static String defaultLang;
     private static final String PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + ChatColor.BOLD + "Oyster" + ChatColor.RESET + ChatColor.GRAY + "] ";
 
     public static void info(String message) {
@@ -33,7 +34,7 @@ public class Log {
     }
 
     public static void transInfo(String message, Object args) {
-
+        info(defaultLocale.translate(defaultLang, message, args));
     }
 
     public static void debug(String msg) {

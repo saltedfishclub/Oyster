@@ -21,9 +21,13 @@
 
 package cc.sfclub.game;
 
+import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.util.Log;
 import lombok.SneakyThrows;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.util.zip.ZipFile;
 
 public final class Oyster extends JavaPlugin {
 
@@ -33,6 +37,10 @@ public final class Oyster extends JavaPlugin {
         Log.info(getDescription().getDescription());
         Log.info("Extracting Internal Locales...");
         extractLangs();
+        Log.defaultLang = "en_US";
+        Log.transInfo("oyster.loading", "");
+        Log.transInfo("oyster.err", "");
+        Log.transInfo("oyster.succ", "");
     }
 
     @Override
@@ -40,7 +48,9 @@ public final class Oyster extends JavaPlugin {
         // Plugin shutdown logic
     }
 
+    @SneakyThrows
     private void extractLangs() {
-        saveResource("langs.zip", true);
+        saveResource("locale.zip", true);
+        Log.defaultLocale = LocaleLoader.loadAsLocale(new ZipFile(new File(getDataFolder(), "locale.zip")));
     }
 }

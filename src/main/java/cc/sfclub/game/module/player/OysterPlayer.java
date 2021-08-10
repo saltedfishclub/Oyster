@@ -30,7 +30,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
@@ -64,7 +63,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     }
 
     public String translate(String key, Object... args) {
-        return String.format(locale.getLocale(getBukkitPlayer().getLocale()).getOrDefault(key, ChatColor.RED + key + ChatColor.RESET), args);
+        return locale.translate(getBukkitPlayer().getLocale(), key, args);
     }
 
     public void sendTranslated(String key, Object... args) {

@@ -23,6 +23,7 @@ package cc.sfclub.game.module.i18n;
 import cc.sfclub.game.util.Log;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Map;
@@ -37,8 +38,16 @@ public class Locale {
     private Map<String, String> fallback;
     private final Map<String, Map<String, String>> locales;
 
-    public Map<String, String> getLocale(String locale) {
+    private Map<String, String> getLocale(String locale) {
         return locales.getOrDefault(locale, fallback);
+    }
+
+    public String translateNoArg(String locale, String key) {
+        return getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, key));
+    }
+
+    public String translate(String locale, String key, Object... args) {
+        return String.format(getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args);
     }
 
     public void registerLocale(String lang, Map<String, String> locale) {

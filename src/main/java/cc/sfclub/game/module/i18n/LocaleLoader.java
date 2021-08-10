@@ -55,15 +55,15 @@ public class LocaleLoader {
     }
 
     private static final Map<String, String> parseAsMap(String str) {
-        return Arrays.stream(str.split("\n")).filter(e -> !e.startsWith("#")).collect(Collectors.toMap(e -> e.split("=")[0], e -> {
+        return Arrays.stream(str.split("\n")).filter(e -> !e.startsWith("#")).collect(Collectors.toMap(e -> e.split("=")[0].trim(), e -> {
             String[] arr = e.split("=");
             if (arr.length == 2) {
-                return arr[1];
+                return arr[1].trim().replaceAll("\\n", "\n"); // TODO: 10/08/2021 bug: cant multi line 
             }
             if (arr.length > 2) {
                 StringJoiner joiner = new StringJoiner("=");
                 for (int i = 1; i < arr.length; i++) {
-                    joiner.add(arr[i]);
+                    joiner.add(arr[i].trim().replaceAll("\\n", "\n"));
                 }
                 return joiner.toString();
             }
