@@ -19,23 +19,19 @@
  *     USA
  */
 
-package cc.sfclub.game;
+package cc.sfclub.game.util;
 
-import cc.sfclub.game.util.Log;
-import lombok.SneakyThrows;
-import org.bukkit.plugin.java.JavaPlugin;
+import lombok.RequiredArgsConstructor;
+import org.bukkit.ChatColor;
 
-public final class Oyster extends JavaPlugin {
-
-    @SneakyThrows
-    @Override
-    public void onEnable() {
-        Log.info(getDescription().getDescription());
-
-    }
+@RequiredArgsConstructor
+public class BuildInfo {
+    private final String build_by;
+    private final String build_date;
+    private final String commit;
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    public String toString() {
+        return commit + " Build By " + ((build_by.equals("icybear") || build_by.equals("runner")) ? ChatColor.GREEN + build_by : ChatColor.RED + "Unknown Source") + " at " + build_date;
     }
 }

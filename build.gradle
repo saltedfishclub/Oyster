@@ -47,9 +47,34 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 }
 
+def getCheckedOutGitCommitHash() {
+    def gitFolder = "$projectDir/.git/"
+    def takeFromHash = 7
+    /*
+     * '.git/HEAD' contains either
+     *      in case of detached head: the currently checked out commit hash
+     *      otherwise: a reference to a file containing the current commit hash
+     */
+    def head = new File(gitFolder + "HEAD").text.split(":") // .git/HEAD
+    def isCommit = head.length == 1 // e5a7c79edabbf7dd39888442df081b1c9d8e88fd
+    // def isRef = head.length > 1     // ref: refs/heads/master
+
+    if(isCommit) return head[0].trim().take(takeFromHash) // e5a7c79edabb
+
+    def refHead = new File(gitFolder + head[1].trim()) // .git/refs/heads/master
+    refHead.text.trim().take takeFromHash
+}
+def buildDate = new Date().toGMTString()
+def buildBy = System.getProperty("user.name")
+def commitHash = getCheckedOutGitCommitHash()
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         duplicatesStrategy DuplicatesStrategy.INCLUDE
-        filter ReplaceTokens, tokens: [version: version]
+        filter ReplaceTokens, tokens: [
+                version: version,
+                buildDate: buildDate,
+                buildBy: (buildBy.equals("runner") || buildBy.equals("icybear"))?buildBy:"Unknown",
+                commitHash: commitHash
+        ]
     }
 }
