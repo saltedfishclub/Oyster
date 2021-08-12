@@ -33,61 +33,40 @@ import java.util.zip.ZipFile;
 @ApiStatus.AvailableSince("0.1.0")
 public class LocaleLoader {
     public static final Locale loadAsLocale(ZipFile zipFile) {
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        Map<String, String> fallback = new HashMap<>();
-        Map<String, Map<String, String>> locales = new HashMap<>();
+        var entries = zipFile.entries();
+        Properties fallback = null;
+        var locales = new HashMap<String, Properties>();
+
         while (entries.hasMoreElements()) {
-            ZipEntry ze = entries.nextElement();
-            String[] fn = ze.getName().split("\\.");
-            if (fn.length != 2) {
-                Log.warn("Invalid file: " + ze.getName());
+            var entry = entries.nextElement();
+
+            var property = new Properties();
+
+            try {
+                property.load(zipFile.getInputStream(entry));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Log.warn("Can't load " + entry.getName() + " as a locale. " + entry.getName());
+                throw new RuntimeException(ex);
+            }
+
+            var fileNames = entry.getName().split("\\.");
+            if (fileNames.length != 2) {
+                Log.warn("Invalid file: " + entry.getName());
                 continue;
             }
-            String fileName = fn[0];
+            var fileName = fileNames[0];
             if (fileName.startsWith("default_")) {
-                fallback = parseAsMap(read(zipFile, ze));
-                locales.put(fileName.replaceFirst("default_", ""), fallback);
-                continue;
+                fallback = property;
             }
-            locales.put(fileName, parseAsMap(read(zipFile, ze)));
-            Log.debug("Loaded locale: " + fn[0]);
+
+            locales.put(entry.getName(), property);
         }
-        Log.debug(locales.entrySet().size() + " was loaded.");
+
+        if (fallback == null) {
+            throw new RuntimeException("There is not a default locale file.");
+        }
+
         return new Locale(fallback, locales);
-    }
-
-    private static final Map<String, String> parseAsMap(String str) {
-        return Arrays.stream(str.split("\n")).filter(e -> !e.startsWith("#")).collect(Collectors.toMap(e -> e.split("=")[0].trim(), e -> {
-            String[] arr = e.split("=");
-            if (arr.length == 2) {
-                return arr[1].trim().replaceAll("\\n", "\n"); // TODO: 10/08/2021 bug: cant multi line 
-            }
-            if (arr.length > 2) {
-                StringJoiner joiner = new StringJoiner("=");
-                for (int i = 1; i < arr.length; i++) {
-                    joiner.add(arr[i].trim().replaceAll("\\n", "\n"));
-                }
-                return joiner.toString();
-            }
-            return "Invalid Pattern.";
-        }));
-    }
-
-    private static final String read(ZipFile zip, ZipEntry zipEntry) {
-        try {
-            InputStream is = zip.getInputStream(zipEntry);
-            byte[] buffer = new byte[4096];
-            StringBuilder builder = new StringBuilder();
-            int i;
-            while ((i = is.read(buffer)) != -1) {
-                builder.append(new String(buffer));
-            }
-            is.close();
-            return builder.toString();
-        } catch (Throwable T) {
-            T.printStackTrace();
-            Log.warn("Can't load " + zipEntry.getName() + " as a locale. " + zip.getName());
-            return "";
-        }
     }
 }
