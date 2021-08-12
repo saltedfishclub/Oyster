@@ -27,6 +27,7 @@ import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Get a translation for requested lang.
@@ -35,30 +36,29 @@ import java.util.Map;
 @AllArgsConstructor
 public class Locale {
     @NonNull
-    private Map<String, String> fallback;
-    private final Map<String, Map<String, String>> locales;
+    private Properties fallback;
+    private final Map<String, Properties> locales;
 
-    private Map<String, String> getLocale(String locale) {
+    private Properties getLocale(String locale) {
         return locales.getOrDefault(locale, fallback);
     }
 
     public String translateNoArg(String locale, String key) {
-        return ChatColor.translateAlternateColorCodes('&', getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, key)));
+        return ChatColor.translateAlternateColorCodes('&', getLocale(locale).getProperty(key, fallback.getProperty(key, key)));
     }
 
     public String translate(String locale, String key, Object... args) {
-        return ChatColor.translateAlternateColorCodes('&', String.format(getLocale(locale).getOrDefault(key, fallback.getOrDefault(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args));
+        return ChatColor.translateAlternateColorCodes('&', String.format(getLocale(locale).getProperty(key, fallback.getProperty(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args));
     }
 
-    public void registerLocale(String lang, Map<String, String> locale) {
+    public void registerLocale(String lang, Properties locale) {
         if (locales.containsKey(lang)) {
             Log.warn("Duplicate locale was found! " + lang);
         }
         locales.put(lang, locale);
     }
 
-    public void setFallback(Map<String, String> fallback) {
+    public void setFallback(Properties fallback) {
         this.fallback = fallback;
     }
-
 }
