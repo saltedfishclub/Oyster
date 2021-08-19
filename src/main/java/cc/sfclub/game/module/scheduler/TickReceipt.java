@@ -111,13 +111,7 @@ public class TickReceipt<T> {
     @SuppressWarnings("all")
     protected boolean tick(Object Ot) {
         T t = (T) Ot;
-        if (requirement == null) {
-            for (AwaitingTickable<T> sync : syncs) {
-                sync.tick(sync);
-            }
-            return true;
-        }
-        if (requirement.apply(t)) {
+        if (requirement == null || requirement.apply(t)) {
             for (AwaitingTickable<T> sync : syncs) {
                 sync.tick(sync);
             }
