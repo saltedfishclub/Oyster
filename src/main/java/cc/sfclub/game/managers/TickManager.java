@@ -79,7 +79,8 @@ public final class TickManager {
      * @return
      */
     public Stream<WeakReference<TickReceipt<?>>> receiptStream() {
-        return receipts.stream();
+        return receipts.stream().filter(e -> !e.get().isDropped());
+
     }
 
     /**
@@ -116,6 +117,6 @@ public final class TickManager {
      * @return
      */
     public Optional<? extends TickReceipt<?>> getReceipt(String name) {
-        return receiptStream().map(e -> e.get()).filter(e -> e.name().equals(name)).findFirst();
+        return receipts.stream().map(e -> e.get()).filter(e -> e.name().equals(name) && !e.isDropped()).findFirst();
     }
 }

@@ -36,8 +36,9 @@ import java.util.function.Supplier;
  */
 @ApiStatus.AvailableSince("0.1.0")
 public class TickReceipt<T> {
-    private final List<AwaitingTickable<T>> syncs = new ArrayList<>();
+    private final List<AwaitingTickable<T>> syncs = new ArrayList<>(); //todo Flattening
     private Function<T, Boolean> requirement;
+    private boolean dropped = false;
     private String name;
 
     /**
@@ -99,6 +100,19 @@ public class TickReceipt<T> {
         return this;
     }
 
+    public void drop() {
+        this.dropped = true;
+    }
+
+    /**
+     * Is it being cleaned.
+     *
+     * @return
+     */
+    public boolean isDropped() {
+        return this.dropped;
+    }
+
     /**
      * Get name for receipt.
      *
@@ -112,8 +126,10 @@ public class TickReceipt<T> {
     protected boolean tick(Object Ot) {
         T t = (T) Ot;
         if (requirement == null || requirement.apply(t)) {
-            for (AwaitingTickable<T> sync : syncs) {
-                sync.tick(sync);
+            if (syncs.size() != 0) {
+                for (AwaitingTickable<T> sync : syncs) {
+                    sync.tick(sync);
+                }
             }
             return true;
         } else {
