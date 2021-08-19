@@ -29,13 +29,10 @@ public class AwaitingTickable<T> {
     public Tickable<T> tickable;
     public TickReceipt<T> receipt;
 
-    /**
-     * Fuck java.
-     *
-     * @param t
-     */
     @SuppressWarnings("all")
     public void tick(Object t) {
-        tickable.onUpdate((T) t);
+        if (receipt.tick(t)) {
+            tickable.onUpdate((T) t);
+        }
     }
 }
