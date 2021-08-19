@@ -37,6 +37,7 @@ import java.util.function.Supplier;
 @ApiStatus.AvailableSince("0.1.0")
 public class TickReceipt<T> {
     private final List<AwaitingTickable<T>> syncs = new ArrayList<>(); //todo Flattening
+    private final List<AwaitingTickable<T>> always = new ArrayList<>();
     private Function<T, Boolean> requirement;
     private boolean dropped = false;
     private String name;
@@ -74,6 +75,19 @@ public class TickReceipt<T> {
     public TickReceipt<T> alsoTicks(Tickable<T> tickable) {
         var receipt = new TickReceipt<T>();
         syncs.add(new AwaitingTickable<>(tickable, receipt));
+        return receipt;
+    }
+
+    /**
+     * Syncs and returning new receipt.
+     * Runs whatever requirement allows.
+     *
+     * @param tickable
+     * @return
+     */
+    public TickReceipt<T> alwaysTicks(Tickable<T> tickable) {
+        var receipt = new TickReceipt<T>();
+        always.add(new AwaitingTickable<>(tickable, receipt));
         return receipt;
     }
 
@@ -125,6 +139,11 @@ public class TickReceipt<T> {
     @SuppressWarnings("all")
     protected boolean tick(Object Ot) {
         T t = (T) Ot;
+        if (always.size() != 0) {
+            for (AwaitingTickable<T> alway : always) {
+                alway.tick(t);
+            }
+        }
         if (requirement == null || requirement.apply(t)) {
             if (syncs.size() != 0) {
                 for (AwaitingTickable<T> sync : syncs) {

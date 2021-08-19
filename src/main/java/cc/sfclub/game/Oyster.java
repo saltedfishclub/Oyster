@@ -21,6 +21,7 @@
 
 package cc.sfclub.game;
 
+import cc.sfclub.game.api.OysterAPI;
 import cc.sfclub.game.config.OysterConfig;
 import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.module.i18n.LocaleLoader;

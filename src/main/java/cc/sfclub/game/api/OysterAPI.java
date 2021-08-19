@@ -19,8 +19,9 @@
  *     USA
  */
 
-package cc.sfclub.game;
+package cc.sfclub.game.api;
 
+import cc.sfclub.game.Oyster;
 import cc.sfclub.game.managers.TickManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
