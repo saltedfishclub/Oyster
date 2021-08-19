@@ -22,21 +22,17 @@
 package cc.sfclub.game.module.scheduler;
 
 import cc.sfclub.game.mechanic.Tickable;
-import com.google.common.collect.Lists;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SyncScheduler implements Scheduler {
-    private final Map<Class<?>, List<AwaitingTickable<?>>> tickTargets = new HashMap<>();
+    private final List<AwaitingTickable<?>> tickTargets = new ArrayList<>();
 
     @Override
     public void tick() {
-        for (List<AwaitingTickable<?>> value : tickTargets.values()) {
-            for (AwaitingTickable<?> awaitingTickable : value) {
-                awaitingTickable.tick(awaitingTickable.tickable);
-            }
+        for (AwaitingTickable<?> tickTarget : tickTargets) {
+            tickTarget.tick(tickTarget);
         }
     }
 
@@ -44,23 +40,12 @@ public class SyncScheduler implements Scheduler {
     public <T> TickReceipt<T> add(Tickable<T> tickable) {
         var receipt = new TickReceipt<T>();
         var awaitTickable = new AwaitingTickable<>(tickable, receipt);
-
-        if (!tickTargets.containsKey(tickable.getClass())) {
-            tickTargets.put(tickable.getClass(), Lists.newArrayList(awaitTickable));
-        } else {
-            tickTargets.get(tickable.getClass()).add(awaitTickable);
-        }
+        tickTargets.add(awaitTickable);
         return receipt;
     }
 
     @Override
     public void remove(Tickable<?> tickable) {
-        if (tickTargets.containsKey(tickable.getClass())) {
-            var list = tickTargets.get(tickable.getClass());
-            list.remove(tickable);
-            if (list.size() == 0) {
-                tickTargets.remove(tickable.getClass());
-            }
-        }
+        tickTargets.remove(tickable);
     }
 }
