@@ -38,6 +38,7 @@ import java.util.function.Supplier;
 public class TickReceipt<T> {
     private final List<AwaitingTickable<T>> syncs = new ArrayList<>();
     private Function<T, Boolean> requirement;
+    private String name;
 
     /**
      * Wrapper method for scheduler.strategies
@@ -84,6 +85,27 @@ public class TickReceipt<T> {
     public TickReceipt<T> syncWith(Tickable<T> tickable) {
         alsoTicks(tickable);
         return this;
+    }
+
+    /**
+     * Set name for receipt.
+     * Also see
+     *
+     * @param name receipt name
+     * @return it
+     */
+    public TickReceipt<T> name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    /**
+     * Get name for receipt.
+     *
+     * @return
+     */
+    public String name() {
+        return name;
     }
 
     @SuppressWarnings("all")
