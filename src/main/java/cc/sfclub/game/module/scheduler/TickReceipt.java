@@ -41,10 +41,27 @@ public class TickReceipt<T> {
         return this;
     }
 
+    /**
+     * Syncs and returning new receipt.
+     *
+     * @param tickable
+     * @return
+     */
     public TickReceipt<T> alsoTicks(Tickable<T> tickable) {
         var receipt = new TickReceipt<T>();
         syncs.add(new AwaitingTickable<>(tickable, receipt));
         return receipt;
+    }
+
+    /**
+     * Only syncs, returning itself.
+     *
+     * @param tickable
+     * @return
+     */
+    public TickReceipt<T> syncWith(Tickable<T> tickable) {
+        alsoTicks(tickable);
+        return this;
     }
 
     protected boolean tick(T t) {
