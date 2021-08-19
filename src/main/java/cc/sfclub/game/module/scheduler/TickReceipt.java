@@ -112,11 +112,15 @@ public class TickReceipt<T> {
     protected boolean tick(Object Ot) {
         T t = (T) Ot;
         if (requirement == null) {
-            syncs.forEach(e -> e.tick(t));
+            for (AwaitingTickable<T> sync : syncs) {
+                sync.tick(sync);
+            }
             return true;
         }
         if (requirement.apply(t)) {
-            syncs.forEach(e -> e.tick(t));
+            for (AwaitingTickable<T> sync : syncs) {
+                sync.tick(sync);
+            }
             return true;
         } else {
             return false;
