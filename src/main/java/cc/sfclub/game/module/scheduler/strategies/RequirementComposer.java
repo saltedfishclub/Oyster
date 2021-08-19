@@ -24,28 +24,54 @@ package cc.sfclub.game.module.scheduler.strategies;
 import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Function composer.
+ * Used to combine many functions into one, also see {@link cc.sfclub.game.module.scheduler.TickReceipt#requires(Function)}
+ *
+ * @param <T>
+ */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RequirementComposer<T> implements Function<T, Boolean> {
     private final List<Function<T, Boolean>> funcs;
 
+    /**
+     * Start a compose.
+     * @param classOf solution for the fucking type erasing
+     * @param <T> the type of ticking object
+     * @return it
+     */
     public static <T> RequirementComposer<T> of(Class<T> classOf) {
         return new RequirementComposer<>(new ArrayList<>());
     }
 
+    /**
+     * Start a compose with initial members
+     * @param classOf solution for the fucking type erasing
+     * @param func initial functions
+     * @param <T> the type of ticking object
+     * @return it
+     */
     public static <T> RequirementComposer<T> of(Class<T> classOf, Function<T, Boolean>... func) {
         return new RequirementComposer<>(Lists.newArrayList(func));
     }
 
+    /**
+     * Add into list.
+     * @param function func
+     * @return it
+     */
     public RequirementComposer<T> and(Function<T, Boolean> function) {
         funcs.add(function);
         return this;
     }
 
+    @ApiStatus.Internal
     @Override
     public Boolean apply(T t) {
         return funcs.stream().allMatch(e -> e.apply(t));

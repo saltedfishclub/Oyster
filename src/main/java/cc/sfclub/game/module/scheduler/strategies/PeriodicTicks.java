@@ -26,6 +26,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.function.Function;
 
+/**
+ * A tool that provides common requirement for periodic tasks.
+ */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PeriodicTicks implements Function<Object, Boolean> {
     private final int target;
