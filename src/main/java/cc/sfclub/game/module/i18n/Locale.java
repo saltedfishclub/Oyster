@@ -26,6 +26,7 @@ import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 
@@ -43,12 +44,22 @@ public class Locale {
         return locales.getOrDefault(locale, fallback);
     }
 
-    public String translateNoArg(String locale, String key) {
-        return ChatColor.translateAlternateColorCodes('&', getLocale(locale).getProperty(key, fallback.getProperty(key, key)));
-    }
-
-    public String translate(String locale, String key, Object... args) {
-        return ChatColor.translateAlternateColorCodes('&', String.format(getLocale(locale).getProperty(key, fallback.getProperty(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args));
+    public String translate(String locale, Object... keyAndArgs) {
+        if (keyAndArgs.length < 1) {
+            Log.warn("Misuse of transInfo(...)!");
+            return null;
+        }
+        Object msg = keyAndArgs[0];
+        if (msg instanceof String) {
+            String key = (String) msg;
+            if (keyAndArgs.length == 1) {
+                ChatColor.translateAlternateColorCodes('&', getLocale(locale).getProperty(key, fallback.getProperty(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)));
+            }
+            Object[] args = Arrays.copyOfRange(keyAndArgs, 1, keyAndArgs.length);
+            return ChatColor.translateAlternateColorCodes('&', String.format(getLocale(locale).getProperty(key, fallback.getProperty(key, ChatColor.RED + "Invalid: " + key + ChatColor.RESET)), args));
+        } else {
+            return msg.toString();
+        }
     }
 
     public void registerLocale(String lang, Properties locale) {

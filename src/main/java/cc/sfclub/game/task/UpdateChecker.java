@@ -39,7 +39,7 @@ public class UpdateChecker extends BukkitRunnable {
     private int retries = 0;
     @Override
     public void run() {
-        Log.transInfo("oyster.update.checking", "");
+        Log.transInfo("oyster.update.checking");
         try {
             var request = HttpRequest.newBuilder().GET().uri(new URI(URL_UPDATE_CHECK)).build();
             var body = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();

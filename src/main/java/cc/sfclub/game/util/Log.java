@@ -20,6 +20,7 @@
  */
 
 package cc.sfclub.game.util;
+
 import cc.sfclub.game.module.i18n.Locale;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -34,8 +35,8 @@ public class Log {
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.WHITE + message);
     }
 
-    public static void transInfo(String message, Object... args) {
-        info(defaultLocale.translate(defaultLang, message, args));
+    public static void transInfo(Object... message) {
+        info(defaultLocale.translate(defaultLang, message));
     }
 
     public static void debug(String msg) {
