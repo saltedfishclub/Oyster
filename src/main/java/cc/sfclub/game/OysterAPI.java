@@ -19,18 +19,21 @@
  *     USA
  */
 
-package cc.sfclub.game.task;
+package cc.sfclub.game;
 
-import cc.sfclub.game.module.scheduler.Scheduler;
+import cc.sfclub.game.managers.TickManager;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.scheduler.BukkitRunnable;
 
 @RequiredArgsConstructor
-public class SchedulerAdapter extends BukkitRunnable {
-    private final Scheduler delegatedScheduler;
+public class OysterAPI {
+    @Getter
+    private final Oyster oysterPlugin;
+    @Getter
+    private final TickManager tickManager;
 
-    @Override
-    public void run() {
-        delegatedScheduler.tick();
+
+    public static OysterAPI getInstance() {
+        return Oyster.getPlugin(Oyster.class).getApi();
     }
 }
