@@ -22,10 +22,12 @@
 package cc.sfclub.game;
 
 import cc.sfclub.game.config.OysterConfig;
+import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.task.UpdateChecker;
 import cc.sfclub.game.util.Log;
 import cc.sfclub.game.util.SimpleConfig;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,16 +37,25 @@ import java.io.File;
 import java.util.zip.ZipFile;
 
 /**
- * Low level API
+ * Low level API, avoid using it's method directly.
  */
 @ApiStatus.AvailableSince("0.1.0")
 public final class Oyster extends JavaPlugin {
     private SimpleConfig<OysterConfig> wrappedConfig;
+    private volatile boolean loadLock = false;
+    @Getter
+    private OysterAPI api;
 
     @SneakyThrows
     @Override
     @SuppressWarnings("all")
     public void onEnable() {
+        if (loadLock) {
+            Log.transInfo("oyster.error.dont_reload");
+            setEnabled(false);
+            return;
+        }
+        loadLock = true;
         Log.info(getDescription().getDescription());
         Log.info("Extracting Internal Locales...");
         extractLangs();
@@ -53,12 +64,16 @@ public final class Oyster extends JavaPlugin {
         wrappedConfig.reloadConfig();
         Log.defaultLang = getOysterConfig().getLanguage();
         Log.transInfo("oyster.config.loaded", Log.defaultLang);
+        initiateAPI();
         if (getOysterConfig().isUpdateCheck()) {
             Bukkit.getScheduler().runTaskTimerAsynchronously(this, new UpdateChecker(), 0L, 300 * 20L);
         }
-        
     }
 
+    private void initiateAPI() {
+        var tickMgr = new TickManager(this);
+        api = new OysterAPI(this, tickMgr);
+    }
 
     @Override
     public void onDisable() {
