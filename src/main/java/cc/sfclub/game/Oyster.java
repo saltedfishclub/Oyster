@@ -34,9 +34,13 @@ import org.jetbrains.annotations.ApiStatus;
 import java.io.File;
 import java.util.zip.ZipFile;
 
+/**
+ * Low level API
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public final class Oyster extends JavaPlugin {
     private SimpleConfig<OysterConfig> wrappedConfig;
+
     @SneakyThrows
     @Override
     @SuppressWarnings("all")
@@ -52,6 +56,7 @@ public final class Oyster extends JavaPlugin {
         if (getOysterConfig().isUpdateCheck()) {
             Bukkit.getScheduler().runTaskTimerAsynchronously(this, new UpdateChecker(), 0L, 300 * 20L);
         }
+        
     }
 
 

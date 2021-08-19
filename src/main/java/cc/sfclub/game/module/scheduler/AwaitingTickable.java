@@ -19,12 +19,23 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.module.scheduler;
 
-import org.jetbrains.annotations.ApiStatus;
+import cc.sfclub.game.mechanic.Tickable;
+import lombok.AllArgsConstructor;
 
-@ApiStatus.AvailableSince("0.1.0")
-@FunctionalInterface
-public interface Tickable<T> {
-    void onUpdate(T object);
+@AllArgsConstructor
+public class AwaitingTickable<T> {
+    public Tickable<T> tickable;
+    public TickReceipt<T> receipt;
+
+    /**
+     * Fuck java.
+     *
+     * @param t
+     */
+    @SuppressWarnings("all")
+    public void tick(Object t) {
+        tickable.onUpdate((T) t);
+    }
 }

@@ -19,12 +19,14 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.module.scheduler;
 
-import org.jetbrains.annotations.ApiStatus;
+import cc.sfclub.game.mechanic.Tickable;
 
-@ApiStatus.AvailableSince("0.1.0")
-@FunctionalInterface
-public interface Tickable<T> {
-    void onUpdate(T object);
+public interface Scheduler {
+    void tick();
+
+    <T> TickReceipt<T> add(Tickable<T> tickable);
+
+    void remove(Tickable<?> tickable);
 }

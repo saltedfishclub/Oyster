@@ -19,12 +19,13 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.task;
 
-import org.jetbrains.annotations.ApiStatus;
+import org.bukkit.scheduler.BukkitRunnable;
 
-@ApiStatus.AvailableSince("0.1.0")
-@FunctionalInterface
-public interface Tickable<T> {
-    void onUpdate(T object);
+public class SchedulerAdapter extends BukkitRunnable {
+    @Override
+    public void run() {
+
+    }
 }
