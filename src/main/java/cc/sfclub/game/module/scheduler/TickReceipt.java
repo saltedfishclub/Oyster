@@ -22,20 +22,42 @@
 package cc.sfclub.game.module.scheduler;
 
 import cc.sfclub.game.mechanic.Tickable;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * A receipt that used to specific actions for a tick.
+ *
+ * @param <T> Tick Target
+ */
+@ApiStatus.AvailableSince("0.1.0")
 public class TickReceipt<T> {
     private final List<AwaitingTickable<T>> syncs = new ArrayList<>();
     private Function<T, Boolean> requirement;
 
+    /**
+     * Wrapper method for scheduler.strategies
+     * Also see {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks} and {@link cc.sfclub.game.module.scheduler.strategies.RequirementComposer}
+     *
+     * @param consumer
+     * @return
+     */
     public TickReceipt<T> requires(Supplier<Function<T, Boolean>> consumer) {
         return requires(consumer.get());
     }
 
+    /**
+     * *Set* a function that controls tick happening or not.
+     * ALL receipts only have ONE requirement , see {@link cc.sfclub.game.module.scheduler.strategies.RequirementComposer} for more conditions.
+     * For more complexly periodic conditions: {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks}
+     *
+     * @param func
+     * @return
+     */
     public TickReceipt<T> requires(Function<T, Boolean> func) {
         this.requirement = func;
         return this;
@@ -64,7 +86,9 @@ public class TickReceipt<T> {
         return this;
     }
 
-    protected boolean tick(T t) {
+    @SuppressWarnings("all")
+    protected boolean tick(Object Ot) {
+        T t = (T) Ot;
         if (requirement == null) {
             syncs.forEach(e -> e.tick(t));
             return true;

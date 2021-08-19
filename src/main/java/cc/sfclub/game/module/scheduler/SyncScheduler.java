@@ -32,14 +32,15 @@ public class SyncScheduler implements Scheduler {
     @Override
     public void tick() {
         for (AwaitingTickable<?> tickTarget : tickTargets) {
-            if (tickTarget.receipt.tick(tickTarget)) {
                 tickTarget.tick(tickTarget);
-            }
         }
     }
 
     @Override
-    public <T> TickReceipt<T> add(Tickable<T> tickable) {
+    public <T> TickReceipt<T> add(Tickable<T> tickable) throws IllegalArgumentException {
+        if (tickTargets.parallelStream().anyMatch(e -> e.tickable == tickable)) {
+            throw new IllegalArgumentException(tickable.toString() + " is already in ticking.");
+        }
         var receipt = new TickReceipt<T>();
         var awaitTickable = new AwaitingTickable<>(tickable, receipt);
         tickTargets.add(awaitTickable);

@@ -22,11 +22,33 @@
 package cc.sfclub.game.module.scheduler;
 
 import cc.sfclub.game.mechanic.Tickable;
+import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * A scheduler that ticks tasks.
+ */
+@ApiStatus.AvailableSince("0.1.0")
 public interface Scheduler {
+
+    /**
+     * tick all things if their receipt allows.
+     */
     void tick();
 
+    /**
+     * Add a ticking target, throws {@link IllegalArgumentException} when you're attempting to add a object which already exists.
+     * Always invoke tick( itself )
+     *
+     * @param tickable target.
+     * @param <T>      tickType
+     * @return Receipt. also see {@link TickReceipt}
+     */
     <T> TickReceipt<T> add(Tickable<T> tickable);
 
+    /**
+     * Remove from ticklist.
+     *
+     * @param tickable tickable object.
+     */
     void remove(Tickable<?> tickable);
 }
