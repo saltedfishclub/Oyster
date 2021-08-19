@@ -35,13 +35,13 @@ import java.time.Duration;
 public class UpdateChecker extends BukkitRunnable {
     private static final JsonParser jsonParser = new JsonParser();
     private final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(6)).build();
-    private final String updateCheckUrl = "https://api.github.com/repos/saltedfishclub/Oyster/releases";
+    private static final String URL_UPDATE_CHECK = "https://api.github.com/repos/saltedfishclub/Oyster/releases";
     private int retries = 0;
     @Override
     public void run() {
         Log.transInfo("oyster.update.checking", "");
         try {
-            var request = HttpRequest.newBuilder().GET().uri(new URI(updateCheckUrl)).build();
+            var request = HttpRequest.newBuilder().GET().uri(new URI(URL_UPDATE_CHECK)).build();
             var body = httpClient.send(request, HttpResponse.BodyHandlers.ofString()).body();
             var ja = jsonParser.parse(body == null ? "[]" : body);
             for (JsonElement jsonElement : ja.getAsJsonArray()) {
