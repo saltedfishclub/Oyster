@@ -32,7 +32,9 @@ public class SyncScheduler implements Scheduler {
     @Override
     public void tick() {
         for (AwaitingTickable<?> tickTarget : tickTargets) {
-            tickTarget.tick(tickTarget);
+            if (tickTarget.receipt.tick(tickTarget)) {
+                tickTarget.tick(tickTarget);
+            }
         }
     }
 
