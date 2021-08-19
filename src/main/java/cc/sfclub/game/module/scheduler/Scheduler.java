@@ -33,6 +33,7 @@ public interface Scheduler {
     /**
      * tick all things if their receipt allows.
      */
+    @ApiStatus.Internal
     void tick();
 
     /**
