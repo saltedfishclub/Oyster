@@ -21,17 +21,12 @@
 
 package cc.sfclub.game.module.flag;
 
+import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.Tickable;
-import cc.sfclub.game.module.player.OysterPlayer;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
-    private final Flag.Strategy trigStrategy;
-
-    public FlagType(Flag.Strategy strategy) {
-        trigStrategy = strategy;
-    }
 
     public abstract String getName();
 
@@ -40,15 +35,15 @@ public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
     }
 
     /**
-     * Only call it like player/team.getType().canRun
+     * Only call it like player.flag.canRun
      *
      * @param target
      * @return
      */
-    public boolean canRun(OysterPlayer target) {
+    public boolean canRun(Flaggable<T> target, Flag.Strategy trigStrategy) {
         //todo specators
         if (trigStrategy == Flag.Strategy.ALWAYS) return true;
-        Flag flag = target.getFlagExact(getName());
+        Flag<T> flag = target.getFlagExact(getName());
         if (flag == null) {
             return trigStrategy == Flag.Strategy.NOT_CONTAINS;
         } else {

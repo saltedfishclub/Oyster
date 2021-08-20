@@ -21,7 +21,9 @@
 
 package cc.sfclub.game.module.flag;
 
+import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.Tickable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,7 +31,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.AvailableSince("0.1.0")
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Flag<T extends Tickable<?>> {
     public static final int PRIORITY_HIGH = 1;
@@ -54,7 +56,13 @@ public class Flag<T extends Tickable<?>> {
      */
     private final FlagType<T> type;
 
+    public boolean canRun(Flaggable<T> t) {
+        return type.canRun(t, trigStrategy);
+    }
+
     public enum Strategy {
         NOT_CONTAINS, CONTAINS, ALWAYS
     }
+
+
 }

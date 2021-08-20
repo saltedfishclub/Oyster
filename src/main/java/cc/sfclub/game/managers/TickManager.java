@@ -46,6 +46,9 @@ public final class TickManager {
     private final ReferenceQueue<TickReceipt<?>> refTrashQueue = new ReferenceQueue<>();
     private final List<WeakReference<TickReceipt<?>>> receipts = new ArrayList<>();
 
+    /**
+     * Get the scheduler.
+     */
     @Getter
     private final Scheduler scheduler;
 

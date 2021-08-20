@@ -19,13 +19,43 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
+package cc.sfclub.game.managers;
+
+import cc.sfclub.game.module.flag.FlagType;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 /**
- * A event reactor.
+ * Manager for flagTypes
  */
 @ApiStatus.AvailableSince("0.1.0")
-public interface EventReactor {
-    void onEvent(GameEvent event);
+public class FlagManager {
+    private final Map<Class<? extends FlagType<?>>, Supplier<? extends FlagType<?>>> suppliers = new HashMap<>(64);
+
+    /**
+     * Register a supplier that provides flagtype.
+     *
+     * @param clazz
+     * @param supplier
+     * @param <T>
+     * @return
+     */
+    public <T extends FlagType<?>> FlagManager registerSupplier(Class<T> clazz, Supplier<T> supplier) {
+        suppliers.put(clazz, supplier);
+        return this;
+    }
+
+    /**
+     * Gets a flagtype.
+     *
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public <T extends FlagType<?>> T ofType(Class<T> type) {
+        return (T) suppliers.getOrDefault(type, () -> null).get();
+    }
 }
