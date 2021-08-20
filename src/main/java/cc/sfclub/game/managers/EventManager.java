@@ -19,35 +19,35 @@
  *     USA
  */
 
-package cc.sfclub.game.api.event;
+package cc.sfclub.game.managers;
 
-import cc.sfclub.game.module.game.OysterGame;
-import cc.sfclub.game.module.game.State;
-import lombok.Getter;
-import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
+import cc.sfclub.game.mechanic.EventReactor;
+import cc.sfclub.game.mechanic.GameEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.event.Event;
 
-/**
- * Fire when a game' state is changing.
- */
-@ApiStatus.AvailableSince("0.1.0")
-public class GameStateSwitched extends OysterEvent {
-    private final HandlerList handlerList = new HandlerList();
-    @Getter
-    private final State originalState;
-    @Getter
-    private final State nextState;
+import java.util.ArrayList;
+import java.util.List;
 
-    public GameStateSwitched(OysterGame game, State origin, State next) {
-        super(game);
-        this.originalState = origin;
-        this.nextState = next;
+public class EventManager {
+    private final List<EventReactor> subscribers = new ArrayList<>();
+
+    public <T extends GameEvent> T post(T event) {
+        for (EventReactor subscriber : subscribers) {
+            subscriber.onEvent(event);
+        }
+        return event;
     }
 
-    @NotNull
-    @Override
-    public HandlerList getHandlers() {
-        return handlerList;
+    public void post(Event event) {
+        Bukkit.getPluginManager().callEvent(event);
+    }
+
+    public void register(EventReactor reactor) {
+        subscribers.add(reactor);
+    }
+
+    public void unregister(EventReactor reactor) {
+        subscribers.remove(reactor);
     }
 }

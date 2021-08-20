@@ -22,16 +22,27 @@
 package cc.sfclub.game.api;
 
 import cc.sfclub.game.Oyster;
+import cc.sfclub.game.managers.EventManager;
+import cc.sfclub.game.managers.FlagManager;
 import cc.sfclub.game.managers.TickManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * Oyster APIs
+ */
+@ApiStatus.AvailableSince("0.1.0")
 @RequiredArgsConstructor
 public class OysterAPI {
     @Getter
     private final Oyster oysterPlugin;
     @Getter
     private final TickManager tickManager;
+    @Getter
+    private final EventManager eventManager = new EventManager();
+    @Getter
+    private final FlagManager flagManager = new FlagManager();
 
 
     public static OysterAPI getInstance() {
