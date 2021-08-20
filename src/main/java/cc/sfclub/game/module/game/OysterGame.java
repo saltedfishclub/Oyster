@@ -114,8 +114,8 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
                 .findFirst().orElse(null);
     }
 
-    public void broadcastMessage(String key, Object args) {
-        players.forEach(e -> e.sendTranslated(key, args));
+    public void broadcastMessage(Object args) {
+        players.forEach(e -> e.sendTranslated(args));
     }
 
     @Override

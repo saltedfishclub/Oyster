@@ -62,13 +62,13 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
         });
     }
 
-    public String translate(String key, Object... args) {
-        return locale.translate(getBukkitPlayer().getLocale(), key, args);
+    public String translate(Object... args) {
+        return locale.translate(getBukkitPlayer().getLocale(), args);
     }
 
-    public void sendTranslated(String key, Object... args) {
+    public void sendTranslated(Object... args) {
         if (isOnline()) {
-            getBukkitPlayer().sendMessage(translate(key, args)); //maybe we con... records.
+            getBukkitPlayer().sendMessage(translate(args));
         }
     }
 

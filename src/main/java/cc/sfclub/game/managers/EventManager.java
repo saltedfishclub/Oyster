@@ -25,10 +25,12 @@ import cc.sfclub.game.mechanic.EventReactor;
 import cc.sfclub.game.mechanic.GameEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ApiStatus.AvailableSince("0.1.0")
 public class EventManager {
     private final List<EventReactor> subscribers = new ArrayList<>();
 
