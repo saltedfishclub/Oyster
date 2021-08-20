@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.module.flag;
 
+import cc.sfclub.game.api.OysterAPI;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.Tickable;
 import lombok.AccessLevel;
@@ -58,6 +59,10 @@ public class Flag<T extends Tickable<?>> {
 
     public boolean canRun(Flaggable<T> t) {
         return type.canRun(t, trigStrategy);
+    }
+
+    public static <T extends Tickable<?>> Flag<T> of(String name, int priority, Strategy strategy, boolean disable, Class<FlagType<T>> flagTypeClass) {
+        return new Flag<T>(name, priority, strategy, disable, OysterAPI.getInstance().getFlagManager().ofType(flagTypeClass));
     }
 
     public enum Strategy {
