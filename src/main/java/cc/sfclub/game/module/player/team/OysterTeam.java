@@ -38,17 +38,44 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * 一个 Team 代表了一组人。他们具有共享的 Flags ，但也可以有独立的个体产生额外的 Flags。
+ * 多人游戏中，Team 总是要互相协作工作，他们之间的许多资源将会是共享的（当然，这个也由 Flag 来控制。）
+ * 通常来说，个人拥有的 Flag 在判断时总会覆盖团队的通用 Flag。
+ * <p>
+ * Also see {@link Flag} and {@link OysterPlayer}
+ */
 @ApiStatus.AvailableSince("0.1.0")
 @Getter
 @RequiredArgsConstructor
 public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam> {
+    /**
+     * 队伍内的玩家列表
+     */
     private final Set<OysterPlayer> players;
+    /**
+     * 队伍所持有的标签
+     */
     private final Set<Flag<OysterPlayer>> flags;
+    /**
+     * 队伍名称
+     */
     private final String name;
+    /**
+     * 队伍在可以被染色的地方出现时候的颜色
+     */
     private final ChatColor color;
+    /**
+     * 队伍的机能
+     * Also see {@link Mechanic}
+     */
     private final TeamMechanic mechanic;
 
-    public void broadcastMessages(String message, Object... args) {
+    /**
+     * 广播信息
+     * @param args 翻译键和参数
+     */
+    public void broadcastMessages(String message, Object... args) { //todo generify
         players.forEach(e -> e.sendTranslated(message, args));
     }
 

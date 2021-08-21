@@ -27,57 +27,122 @@ import lombok.RequiredArgsConstructor;
 import java.util.function.Function;
 
 /**
- * A tool that provides common requirement for periodic tasks.
+ * 用于收集 tick 做到控制间隔的工具
+ * Also see {@link cc.sfclub.game.module.scheduler.TickReceipt#requires(Function)}
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class PeriodicTicks implements Function<Object, Boolean> {
     private final int target;
     private int ticks;
 
+    /**
+     * 一秒
+     *
+     * @return
+     */
     public static PeriodicTicks bySecond() {
         return bySeconds(0.5f);
     }
 
+    /**
+     * 半秒
+     *
+     * @return
+     */
     public static PeriodicTicks byHalfSecond() {
         return bySeconds(0.5f);
     }
 
+    /**
+     * 一分钟
+     *
+     * @return
+     */
     public static PeriodicTicks byMinute() {
         return byMinutes(1);
     }
 
+    /**
+     * 半分钟
+     *
+     * @return
+     */
     public static PeriodicTicks byHalfMinute() {
         return byMinutes(0.5f);
     }
 
+    /**
+     * 五分钟
+     *
+     * @return
+     */
     public static PeriodicTicks byFiveMinutes() {
         return byMinutes(5f);
     }
 
+    /**
+     * 十分钟
+     *
+     * @return
+     */
     public static PeriodicTicks byTenMinutes() {
         return byMinutes(10f);
     }
 
+    /**
+     * 半小时
+     *
+     * @return
+     */
     public static PeriodicTicks byHalfHour() {
         return byHour(0.5f);
     }
 
+    /**
+     * 一小时
+     *
+     * @return
+     */
     public static PeriodicTicks byHour() {
         return byHour(1f);
     }
 
+    /**
+     * 具体小时
+     *
+     * @param hours
+     * @return
+     */
     public static PeriodicTicks byHour(float hours) {
         return byMinutes(hours * 60);
     }
 
+    /**
+     * 具体秒
+     *
+     * @param second
+     * @return
+     */
     public static PeriodicTicks bySeconds(float second) {
         return new PeriodicTicks((int) (20 * second));
     }
 
+    /**
+     * 具体分钟
+     *
+     * @param minutes
+     * @return
+     */
     public static PeriodicTicks byMinutes(float minutes) {
         return bySeconds(60 * minutes);
     }
 
+    /**
+     * 具体游戏刻
+     *
+     * @param ticks
+     * @return
+     */
     public static PeriodicTicks byTicks(int ticks) {
         return new PeriodicTicks(ticks);
     }

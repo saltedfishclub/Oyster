@@ -24,11 +24,13 @@ package cc.sfclub.game.module.player.team;
 import cc.sfclub.game.mechanic.Mechanic;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * 只应看 {@link Mechanic}
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class TeamMechanic implements Mechanic<OysterTeam> {
     @Override
     public void onUpdate(OysterTeam object) {
-
         tick(object);
     }
 

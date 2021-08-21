@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.module.scheduler;
 
+import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.mechanic.Tickable;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -30,7 +31,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A receipt that used to specific actions for a tick.
+ * 注册 tick 后产生的回执
+ * Also see {@link Scheduler#add(Tickable)}
  *
  * @param <T> Tick Target
  */
@@ -43,7 +45,7 @@ public class TickReceipt<T> {
     private String name;
 
     /**
-     * Wrapper method for scheduler.strategies
+     * 包装。
      * Also see {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks} and {@link cc.sfclub.game.module.scheduler.strategies.RequirementComposer}
      *
      * @param consumer
@@ -54,9 +56,9 @@ public class TickReceipt<T> {
     }
 
     /**
-     * *Set* a function that controls tick happening or not.
-     * ALL receipts only have ONE requirement , see {@link cc.sfclub.game.module.scheduler.strategies.RequirementComposer} for more conditions.
-     * For more complexly periodic conditions: {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks}
+     * 触发 tick 的先决条件。
+     * 每个回执只能设置有一个条件，多个以最后插入的为准 , 可以通过 {@link cc.sfclub.game.module.scheduler.strategies.RequirementComposer} 或者 {@link Function#andThen(Function)} 合并多个条件
+     * 设置触发更新的间隔: {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks}
      *
      * @param func
      * @return
@@ -67,10 +69,12 @@ public class TickReceipt<T> {
     }
 
     /**
-     * Syncs and returning new receipt.
+     * 在回执目标运行的时候顺便运行新的 tickable，可以用于同步多个实体之间的动作
+     * 与 {@link this#alwaysTicks(Tickable)} 不同，（如果有的话）他必须在 {@link this#requires(Function)} 通过后才运行
+     * 这意味着可能会受到 {@link cc.sfclub.game.module.scheduler.strategies.PeriodicTicks} 一类的影响
      *
      * @param tickable
-     * @return
+     * @return 新 tickable 的回执，用于更方便的链式调用
      */
     public TickReceipt<T> alsoTicks(Tickable<T> tickable) {
         var receipt = new TickReceipt<T>();
@@ -79,11 +83,11 @@ public class TickReceipt<T> {
     }
 
     /**
-     * Syncs and returning new receipt.
-     * Runs whatever requirement allows.
+     * 在回执目标运行的时候顺便运行新的 tickable，可以用于同步多个实体之间的动作
+     * 和 {@link this#alsoTicks(Tickable)} 不同，它无视条件触发。
      *
      * @param tickable
-     * @return
+     * @return 新的回执，用于更方便的链式调用
      */
     public TickReceipt<T> alwaysTicks(Tickable<T> tickable) {
         var receipt = new TickReceipt<T>();
@@ -92,10 +96,11 @@ public class TickReceipt<T> {
     }
 
     /**
-     * Only syncs, returning itself.
+     * 在回执目标运行的时候顺便运行新的 tickable，可以用于同步多个实体之间的动作
+     * 与 {@link this#alsoTicks(Tickable)} 和 {@link this#alwaysTicks(Tickable)} 不同，他不会返回新的回执，但是会受到同一个条件 ({@link this#requires(Function)}) 的影响。
      *
      * @param tickable
-     * @return
+     * @return 自身，用于更方便的链式调用
      */
     public TickReceipt<T> syncWith(Tickable<T> tickable) {
         alsoTicks(tickable);
@@ -103,23 +108,27 @@ public class TickReceipt<T> {
     }
 
     /**
-     * Set name for receipt.
-     * Also see
+     * 设置回执的名字
+     * Also see {@link cc.sfclub.game.managers.TickManager#getReceipt(String)}
      *
      * @param name receipt name
-     * @return it
+     * @return 自身
      */
     public TickReceipt<T> name(String name) {
         this.name = name;
         return this;
     }
 
+    /**
+     * 标记回执已经被抛弃，将会被垃圾处理器回收。
+     * Also see {@link this#isDropped()}
+     */
     public void drop() {
         this.dropped = true;
     }
 
     /**
-     * Is it being cleaned.
+     * 是否已经被抛弃，通常不应该继续保留被抛弃的回执的引用，其次你将无法通过 {@link TickManager#receiptStream()} 等方式获取到他
      *
      * @return
      */
@@ -128,7 +137,7 @@ public class TickReceipt<T> {
     }
 
     /**
-     * Get name for receipt.
+     * 获取回执名字
      *
      * @return
      */

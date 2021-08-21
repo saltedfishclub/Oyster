@@ -63,23 +63,39 @@ import java.util.stream.Collectors;
 @ApiStatus.AvailableSince("0.1.0")
 @Builder
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
+    /**
+     * 获取游戏的名字，总是随机的字符串。
+     */
     @Getter
     private final String name;
+    /**
+     * 游戏的原型
+     */
     @Getter
     private final GameDescription protoType;
 
+    /**
+     * 活动范围
+     */
     @Builder.Default
     @Getter
     private final GameScope scope = new AnywhereScope();
+    /**
+     * 游玩的参与者
+     */
     @Builder.Default
     @Getter
     private final List<OysterPlayer> players = new ArrayList<>();
-    @Getter
-    private State state;
-
+    /**
+     * 队伍（可选）
+     */
     @Builder.Default
     @Getter
     private final Map<String, OysterTeam> teams = new HashMap<>();
+    /**
+     * 规则，实质上是 Flag
+     * (可选)
+     */
     @Getter
     @Builder.Default
     private final Set<Flag<OysterGame>> rules = new TreeSet<>((a, b) -> {
@@ -89,15 +105,37 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
         }
         return v;
     });
+    /**
+     * 游戏的机能。
+     */
     @Builder.Default
     private final GameMechanic mechanic = new EmptyGameMechanic();
+    /**
+     * 游戏的 tick 调度管理器
+     * Also see {@link cc.sfclub.game.module.scheduler.TickReceipt}
+     */
     @Builder.Default
     @Getter
     private final TickManager tickManager = new TickManager();
+    /**
+     * 游戏的事件管道。
+     */
     @Builder.Default
     @Getter
     private final EventManager eventBus = new EventManager();
+    /**
+     * GameState
+     */
+    @Getter
+    private State state;
 
+    /**
+     * 提供了自动强转获取State的方法，可能CCE
+     *
+     * @param t
+     * @param <T>
+     * @return
+     */
     public <T> T getStateAs(Class<T> t) {
         return t.cast(state);
     }
@@ -122,6 +160,11 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
         rules.remove(flag);
     }
 
+    /**
+     * 切换状态
+     *
+     * @param newState
+     */
     public void switchState(State newState) {
         Bukkit.getPluginManager().callEvent(new GameStateSwitched(this, this.state, newState));
         newState.init(this);
@@ -141,6 +184,12 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
                 .findFirst().orElse(null);
     }
 
+    /**
+     * 广播信息，只能使用翻译键。
+     * Also see {@link cc.sfclub.game.module.i18n.Locale}
+     *
+     * @param args
+     */
     public void broadcastMessage(Object args) {
         players.forEach(e -> e.sendTranslated(args));
     }

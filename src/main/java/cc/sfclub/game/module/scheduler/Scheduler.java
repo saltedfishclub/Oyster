@@ -25,7 +25,9 @@ import cc.sfclub.game.mechanic.Tickable;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * A scheduler that ticks tasks.
+ * 任务调度器。
+ * 每 tick 触发一次调度队列里的所有元素
+ * Also see {@link Tickable}
  */
 @ApiStatus.AvailableSince("0.1.0")
 public interface Scheduler {

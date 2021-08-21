@@ -24,6 +24,9 @@ import cc.sfclub.game.mechanic.Mechanic;
 import cc.sfclub.game.mechanic.OysterEntity;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * Just see {@link Mechanic}
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class PlayerMechanic extends OysterEntity<OysterPlayer> implements Mechanic<OysterPlayer> {
     @Override

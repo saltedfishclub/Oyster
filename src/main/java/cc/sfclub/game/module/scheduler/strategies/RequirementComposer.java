@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Function composer.
- * Used to combine many functions into one, also see {@link cc.sfclub.game.module.scheduler.TickReceipt#requires(Function)}
+ * 函数组合工具，适用于不使用 Function#compose/andThen 的场景（只在这一种情况才 andThen）
+ * Also see {@link cc.sfclub.game.module.scheduler.TickReceipt#requires(Function)}
  *
  * @param <T>
  */
@@ -41,9 +41,10 @@ public class RequirementComposer<T> implements Function<T, Boolean> {
     private final List<Function<T, Boolean>> funcs;
 
     /**
-     * Start a compose.
-     * @param classOf solution for the fucking type erasing
-     * @param <T> the type of ticking object
+     * 准备一次组装
+     *
+     * @param classOf 传参的 class
+     * @param <T>     the type of ticking object
      * @return it
      */
     public static <T> RequirementComposer<T> of(Class<T> classOf) {
@@ -51,7 +52,7 @@ public class RequirementComposer<T> implements Function<T, Boolean> {
     }
 
     /**
-     * Start a compose with initial members
+     * 用初始函数列准备一次组装
      * @param classOf solution for the fucking type erasing
      * @param func initial functions
      * @param <T> the type of ticking object

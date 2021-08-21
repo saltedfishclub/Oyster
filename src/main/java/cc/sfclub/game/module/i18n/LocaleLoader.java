@@ -24,14 +24,22 @@ package cc.sfclub.game.module.i18n;
 import cc.sfclub.game.util.Log;
 import org.jetbrains.annotations.ApiStatus;
 
-import java.io.InputStream;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
+import java.util.HashMap;
+import java.util.Properties;
 import java.util.zip.ZipFile;
 
+/**
+ * 语言文件加载器。文件格式：https://github.com/saltedfishclub/Oyster/wiki/I18N-File-Format
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public class LocaleLoader {
+    /**
+     * 加载文件并且返回 {@link Locale}
+     * 总不为 null，但可能跑出 RuntimeException (如果无法打开文件)
+     *
+     * @param zipFile 文件
+     * @return locale
+     */
     public static final Locale loadAsLocale(ZipFile zipFile) {
         var entries = zipFile.entries();
         Properties fallback = null;

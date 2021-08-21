@@ -25,13 +25,14 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 
 /**
- * Get a translation for requested lang.
+ * Oyster 国际化模块
  */
 @ApiStatus.AvailableSince("0.1.0")
 @AllArgsConstructor
@@ -44,6 +45,15 @@ public class Locale {
         return locales.getOrDefault(locale, fallback);
     }
 
+    /**
+     * 翻译`翻译键`并且填充参数。
+     * 关于参数如何填充进入翻译文本：https://segmentfault.com/a/1190000013654676
+     *
+     * @param locale     语言
+     * @param keyAndArgs 翻译键和参数，可以只需要翻译键
+     * @return 翻译后的文本，如果只写了语言就会返回null，其他情况下永远不是 null
+     */
+    @Nullable
     public String translate(String locale, Object... keyAndArgs) {
         if (keyAndArgs.length < 1) {
             Log.warn("Misuse of transInfo(...)!");
@@ -62,6 +72,12 @@ public class Locale {
         }
     }
 
+    /**
+     * 注册语言，覆盖时有警告
+     *
+     * @param lang   语言
+     * @param locale 语言文本
+     */
     public void registerLocale(String lang, Properties locale) {
         if (locales.containsKey(lang)) {
             Log.warn("Duplicate locale was found! " + lang);
@@ -69,6 +85,11 @@ public class Locale {
         locales.put(lang, locale);
     }
 
+    /**
+     * 设置 fallback 文本，如果是null则从这里取。
+     *
+     * @param fallback
+     */
     public void setFallback(Properties fallback) {
         this.fallback = fallback;
     }
