@@ -124,6 +124,8 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
 
     public void switchState(State newState) {
         Bukkit.getPluginManager().callEvent(new GameStateSwitched(this, this.state, newState));
+        newState.init(this);
+        this.state.onSwitch(newState);
         this.state = newState;
     }
 
