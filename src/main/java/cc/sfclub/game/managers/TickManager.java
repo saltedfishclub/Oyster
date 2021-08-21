@@ -122,6 +122,6 @@ public final class TickManager {
      * @return
      */
     public Optional<? extends TickReceipt<?>> getReceipt(String name) {
-        return receipts.stream().map(Reference::get).filter(e -> e.name().equals(name) && !e.isDropped()).findFirst();
+        return receipts.stream().map(Reference::get).filter(e -> name.equals(e.name()) && !e.isDropped()).findFirst();
     }
 }
