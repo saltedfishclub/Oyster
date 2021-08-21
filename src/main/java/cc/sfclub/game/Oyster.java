@@ -29,7 +29,6 @@ import cc.sfclub.game.util.Log;
 import cc.sfclub.game.util.SimpleConfig;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -66,7 +65,7 @@ public final class Oyster extends JavaPlugin {
         Log.transInfo("oyster.config.loaded", Log.defaultLang);
         initiateAPI();
         if (getOysterConfig().isUpdateCheck()) {
-            Bukkit.getScheduler().runTaskTimerAsynchronously(this, new UpdateChecker(), 0L, 300 * 20L);
+            new UpdateChecker().runTaskTimerAsynchronously(this, 0L, 300 * 20L);
         }
     }
 
