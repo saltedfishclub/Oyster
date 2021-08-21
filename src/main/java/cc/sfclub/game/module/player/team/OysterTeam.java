@@ -73,10 +73,11 @@ public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam>
 
     /**
      * 广播信息
+     *
      * @param args 翻译键和参数
      */
-    public void broadcastMessages(String message, Object... args) { //todo generify
-        players.forEach(e -> e.sendTranslated(message, args));
+    public void broadcastMessages(Object... args) { //todo generify
+        players.forEach(e -> e.sendTranslated(args));
     }
 
     @Override
