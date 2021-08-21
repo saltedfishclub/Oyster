@@ -155,8 +155,8 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     }
 
     @Override
-    public void onEvent(GameEvent event) {
-        mechanic.onEvent(event);
+    public void onData(GameEvent event) {
+        mechanic.onData(event);
     }
 
     @Nullable

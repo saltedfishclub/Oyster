@@ -19,18 +19,16 @@
  *     USA
  */
 
-package cc.sfclub.game.mechanic;
-import org.jetbrains.annotations.ApiStatus;
+package cc.sfclub.game.module.event;
 
 /**
- * 事件处理器
+ * 可被 {@link Channel} 传输的对象
  */
-@ApiStatus.AvailableSince("0.1.0")
-public interface EventReactor {
+public interface Listenable {
     /**
-     * Also see {@link cc.sfclub.game.managers.EventManager} and {@link GameEvent}
+     * 是否可被更改？
      *
-     * @param event
+     * @return
      */
-    void onEvent(GameEvent event);
+    boolean isMutable();
 }

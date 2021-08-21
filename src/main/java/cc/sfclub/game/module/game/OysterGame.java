@@ -22,10 +22,10 @@
 package cc.sfclub.game.module.game;
 
 import cc.sfclub.game.api.event.GameStateSwitched;
-import cc.sfclub.game.managers.EventManager;
 import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.GameEvent;
+import cc.sfclub.game.module.event.Channel;
 import cc.sfclub.game.module.flag.Flag;
 import cc.sfclub.game.module.game.desc.GameDescription;
 import cc.sfclub.game.module.game.region.AnywhereScope;
@@ -125,7 +125,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
      */
     @Builder.Default
     @Getter
-    private final EventManager eventBus = new EventManager();
+    private final Channel<GameEvent> eventBus = new Channel<>();
     /**
      * GameState
      */
@@ -144,8 +144,8 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     }
 
     @Override
-    public void onEvent(GameEvent event) {
-        mechanic.onEvent(event);
+    public void onData(GameEvent event) {
+        mechanic.onData(event);
     }
 
     @Override

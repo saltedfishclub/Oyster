@@ -32,6 +32,6 @@ public class EmptyGameMechanic extends GameMechanic {
     }
 
     @Override
-    public void onEvent(GameEvent event) {
+    public void onData(GameEvent event) {
     }
 }

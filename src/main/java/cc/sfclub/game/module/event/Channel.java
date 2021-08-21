@@ -19,32 +19,30 @@
  *     USA
  */
 
-package cc.sfclub.game.managers;
+package cc.sfclub.game.module.event;
 
-import cc.sfclub.game.mechanic.EventReactor;
-import cc.sfclub.game.mechanic.GameEvent;
+import cc.sfclub.game.mechanic.ChannelSubscriber;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 轻量，简单的EventBus，也可以用来做数据通道
+ * 数据管道，可传输事件或者别的什么，对象可能在传输过程中被更改。
  */
 @ApiStatus.AvailableSince("0.1.0")
-public class EventManager {
-    private final List<EventReactor> subscribers = new ArrayList<>();
+public class Channel<T extends Listenable> {
+    private final List<ChannelSubscriber<T>> subscribers = new ArrayList<>();
 
     /**
      * Post an event to all reactors. Not a bukkit interaction.
      *
      * @param event event to post
-     * @param <T>   type of event
      * @return param
      */
-    public <T extends GameEvent> T post(T event) {
-        for (EventReactor subscriber : subscribers) {
-            subscriber.onEvent(event);
+    public T post(T event) {
+        for (ChannelSubscriber<T> subscriber : subscribers) {
+            subscriber.onData(event);
         }
         return event;
     }
@@ -54,7 +52,7 @@ public class EventManager {
      *
      * @param reactor
      */
-    public void register(EventReactor reactor) {
+    public void register(ChannelSubscriber<T> reactor) {
         subscribers.add(reactor);
     }
 
@@ -63,7 +61,7 @@ public class EventManager {
      *
      * @param reactor
      */
-    public void unregister(EventReactor reactor) {
+    public void unregister(ChannelSubscriber<T> reactor) {
         subscribers.remove(reactor);
     }
 }

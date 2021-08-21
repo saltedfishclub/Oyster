@@ -101,8 +101,8 @@ public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam>
     }
 
     @Override
-    public void onEvent(GameEvent event) {
-        mechanic.onEvent(event);
+    public void onData(GameEvent event) {
+        mechanic.onData(event);
     }
 
     @Override

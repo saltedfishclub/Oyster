@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <T>
  */
 @ApiStatus.AvailableSince("0.1.0")
-public abstract class OysterEntity<T> implements Flaggable, EventReactor, Tickable<T> {
+public abstract class OysterEntity<T> implements Flaggable, ChannelSubscriber<GameEvent>, Tickable<T> {
     @Nullable
     public abstract Entity getAsEntity();
 }

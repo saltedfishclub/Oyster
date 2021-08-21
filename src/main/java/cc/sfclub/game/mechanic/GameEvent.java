@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.mechanic;
 
+import cc.sfclub.game.module.event.Listenable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.bukkit.event.Event;
@@ -33,7 +34,7 @@ import org.jetbrains.annotations.ApiStatus;
 @Getter
 @AllArgsConstructor
 @ApiStatus.AvailableSince("0.1.0")
-public abstract class GameEvent extends Event {
+public abstract class GameEvent extends Event implements Listenable {
     /**
      * 事件发生的范围
      */
