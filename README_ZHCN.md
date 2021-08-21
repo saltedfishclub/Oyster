@@ -1,8 +1,8 @@
 <div>
   <img width="190" height="210" align="left" src="https://i.loli.net/2021/08/05/4jx57ETzLJPMncg.jpg" alt="Logo"/>
   <br />
-  <h1>Oyster</h1>
-  <p>Subproject of <a href="https://github.com/saltedfishclub/Oni">Oni</a>, a framework which focused on minigames. <a href="https://jq.qq.com/?_wv=1027&k=NStiaxZz">QQ Group</a><br />
+  <h1>牡蛎~~~</h1>
+  <p><a href="https://github.com/saltedfishclub/Oni">Oni</a>的子项目，一个专注于小游戏的开发框架。<a href="https://jq.qq.com/?_wv=1027&k=NStiaxZz">QQ 群</a><br />
     <img src="https://img.shields.io/github/license/saltedfishclub/Oyster">
     <img src="https://img.shields.io/github/workflow/status/saltedfishclub/Oni/Java%20CI%20with%20Gradle"> 
     <img src="https://img.shields.io/discord/612522451200638991">
@@ -11,21 +11,21 @@
 </div>
 <br />
 
-English | [简体中文](https://github.com/saltedfishclub/Oyster/blob/dev/README_ZHCN.md)
+[English](https://github.com/saltedfishclub/Oyster/blob/dev/README.md) | 简体中文
 
-## What
+## 这是什么？
 
-It is a flexible framework that attempts to reduce costs for developing a game in bukkit.  
-Mainly focusing on multiplayer competition or PvE games (Invasive games)
+一个旨在减少开发成本的灵活的Bukkit小游戏框架。
+主要服务的对象是多人竞技或合作小游戏。
 
-## Requirement
+## 系统需求？
 
-Java 11 + Spigot Server.    
-Natively based on 1.16.5, older versions are likely to be supported.  
-[The reasons to move to Java 11](https://docs.microsoft.com/en-us/azure/developer/java/fundamentals/reasons-to-move-to-java-11)
-| [为什么我们要选择迁移到 Java 11](https://docs.microsoft.com/zh-cn/azure/developer/java/fundamentals/reasons-to-move-to-java-11)
+Java 11 和 Spigot 服务端。  
+开发基于 1.16.5，旧版本将难以得到支持。
 
-## Build
+[为什么我们要选择迁移到 Java 11](https://docs.microsoft.com/zh-cn/azure/developer/java/fundamentals/reasons-to-move-to-java-11)
+
+## 构建
 
 ```shell
 git clone https://github.com/saltedfishclub/Oyster
@@ -33,7 +33,7 @@ cd Oyster
 ./gradlew shadowjar
 ```
 
-## License
+## 许可证
 
 ```
     Oyster - The universal minigame framework for spigot servers.
