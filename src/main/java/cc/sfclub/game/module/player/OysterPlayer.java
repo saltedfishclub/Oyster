@@ -24,7 +24,7 @@ package cc.sfclub.game.module.player;
 import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.mechanic.OysterEntity;
 import cc.sfclub.game.module.flag.Flag;
-import cc.sfclub.game.module.i18n.Locale;
+import cc.sfclub.game.module.game.OysterGame;
 import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -46,10 +46,6 @@ import java.util.*;
 @Getter
 public class OysterPlayer extends OysterEntity<OysterPlayer> {
     /**
-     * 玩家所用的语言
-     */
-    private final Locale locale; //todo it;s string
-    /**
      * Bukkit 玩家实体的 UUID
      */
     private final UUID bukkitPlayer;
@@ -65,12 +61,13 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     private final OysterTeam team;
     @Getter(AccessLevel.PRIVATE)
     private final Set<Flag<OysterPlayer>> sortedFlags;
+    private final OysterGame game;
 
-    public OysterPlayer(Locale locale, UUID bukkitPlayer, PlayerMechanic mechanic, OysterTeam team, Collection<Flag> flags) {
-        this.locale = locale;
+    public OysterPlayer(UUID bukkitPlayer, PlayerMechanic mechanic, OysterTeam team, OysterGame game, Collection<Flag<OysterPlayer>> flags) {
         this.bukkitPlayer = bukkitPlayer;
         this.mechanic = mechanic;
         this.team = team;
+        this.game = game;
         sortedFlags = new TreeSet<>((a, b) -> {
             int v = a.getPriority() - b.getPriority();
             if (v == 0) {
@@ -78,7 +75,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
             }
             return v;
         });
-        //todo fix bug flags
+        sortedFlags.addAll(flags);
     }
 
     /**
@@ -88,7 +85,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
      * @return
      */
     public String translate(Object... args) {
-        return locale.translate(getBukkitPlayer().getLocale(), args);
+        return game.getLocale().translate(getBukkitPlayer().getLocale(), args);
     }
 
     /**

@@ -30,6 +30,7 @@ import cc.sfclub.game.module.flag.Flag;
 import cc.sfclub.game.module.game.desc.GameDescription;
 import cc.sfclub.game.module.game.region.AnywhereScope;
 import cc.sfclub.game.module.game.region.GameScope;
+import cc.sfclub.game.module.i18n.Locale;
 import cc.sfclub.game.module.player.OysterPlayer;
 import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.Builder;
@@ -74,6 +75,8 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     @Getter
     private final GameDescription protoType;
 
+    @Getter
+    private final Locale locale;
     /**
      * 活动范围
      */
