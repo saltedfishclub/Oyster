@@ -45,6 +45,10 @@ public class Log {
         }
     }
 
+    public static void transWarn(Object... message) {
+        warn(defaultLocale.translate(defaultLang, message));
+    }
+
     public static void warn(String message) {
         Bukkit.getConsoleSender().sendMessage(PREFIX + ChatColor.RED + message);
     }

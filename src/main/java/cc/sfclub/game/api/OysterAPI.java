@@ -23,6 +23,7 @@ package cc.sfclub.game.api;
 
 import cc.sfclub.game.Oyster;
 import cc.sfclub.game.managers.FlagManager;
+import cc.sfclub.game.managers.GameManager;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.ApiStatus;
 public class OysterAPI {
     @Getter
     private final FlagManager flagManager = new FlagManager();
+    private final GameManager gameManager = new GameManager();
 
     public static OysterAPI getInstance() {
         return Oyster.getPlugin(Oyster.class).getApi();

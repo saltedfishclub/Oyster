@@ -46,5 +46,18 @@ public enum ScopeType {
      * Conflict with NOTHING
      * Compatible to ALL
      */
-    SCOPELESS
+    SCOPELESS;
+
+    public boolean isConflict(ScopeType another) {
+        switch (this) {
+            case CHUNK:
+                return another == WORLD;
+            case WORLD:
+                return another == CHUNK;
+            case SCOPELESS:
+                return true;
+            default:
+                throw new AssertionError("Unknown Error");
+        }
+    }
 }

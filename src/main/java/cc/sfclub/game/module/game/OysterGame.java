@@ -27,6 +27,7 @@ import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.module.flag.Flag;
+import cc.sfclub.game.module.game.desc.GameDescription;
 import cc.sfclub.game.module.game.region.AnywhereScope;
 import cc.sfclub.game.module.game.region.GameScope;
 import cc.sfclub.game.module.player.OysterPlayer;
@@ -46,6 +47,8 @@ import java.util.stream.Collectors;
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     @Getter
     private final String name;
+    @Getter
+    private final GameDescription protoType;
 
     @Builder.Default
     @Getter

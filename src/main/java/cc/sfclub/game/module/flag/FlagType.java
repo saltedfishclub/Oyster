@@ -41,7 +41,7 @@ public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
      * @return
      */
     public boolean canRun(Flaggable<T> target, Flag.Strategy trigStrategy) {
-        //todo specators
+        //todo specators @ Internal Flags
         if (trigStrategy == Flag.Strategy.ALWAYS) return true;
         Flag<T> flag = target.getFlagExact(getName());
         if (flag == null) {
