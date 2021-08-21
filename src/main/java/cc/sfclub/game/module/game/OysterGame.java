@@ -22,6 +22,8 @@
 package cc.sfclub.game.module.game;
 
 import cc.sfclub.game.api.event.GameStateSwitched;
+import cc.sfclub.game.managers.EventManager;
+import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.module.flag.Flag;
@@ -29,7 +31,6 @@ import cc.sfclub.game.module.game.region.AnywhereScope;
 import cc.sfclub.game.module.game.region.GameScope;
 import cc.sfclub.game.module.player.OysterPlayer;
 import cc.sfclub.game.module.player.team.OysterTeam;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -41,8 +42,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @ApiStatus.AvailableSince("0.1.0")
-@Builder(access = AccessLevel.PRIVATE)
+@Builder
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
+    @Getter
     private final String name;
 
     @Builder.Default
@@ -68,10 +70,12 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     });
     @Builder.Default
     private final GameMechanic mechanic = new EmptyGameMechanic();
-
-    {
-        // TODO: 10/08/2021 Register itself into OysterGameManager
-    }
+    @Builder.Default
+    @Getter
+    private final TickManager tickManager;
+    @Builder.Default
+    @Getter
+    private final EventManager eventBus = new EventManager();
 
     public <T> T getStateAs(Class<T> t) {
         return t.cast(state);

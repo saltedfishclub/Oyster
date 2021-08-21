@@ -23,7 +23,6 @@ package cc.sfclub.game;
 
 import cc.sfclub.game.api.OysterAPI;
 import cc.sfclub.game.config.OysterConfig;
-import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.task.UpdateChecker;
 import cc.sfclub.game.util.Log;
@@ -72,8 +71,7 @@ public final class Oyster extends JavaPlugin {
     }
 
     private void initiateAPI() {
-        var tickMgr = new TickManager(this);
-        api = new OysterAPI(this, tickMgr);
+        api = new OysterAPI();
     }
 
     @Override

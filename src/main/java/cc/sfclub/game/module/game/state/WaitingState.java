@@ -19,22 +19,19 @@
  *     USA
  */
 
-package cc.sfclub.game.api;
+package cc.sfclub.game.module.game.state;
 
-import cc.sfclub.game.Oyster;
-import cc.sfclub.game.managers.FlagManager;
-import lombok.Getter;
-import org.jetbrains.annotations.ApiStatus;
+import cc.sfclub.game.module.game.OysterGame;
+import cc.sfclub.game.module.game.State;
 
-/**
- * Oyster APIs
- */
-@ApiStatus.AvailableSince("0.1.0")
-public class OysterAPI {
-    @Getter
-    private final FlagManager flagManager = new FlagManager();
+public class WaitingState implements State {
+    @Override
+    public void init(OysterGame game) {
+        //todo
+    }
 
-    public static OysterAPI getInstance() {
-        return Oyster.getPlugin(Oyster.class).getApi();
+    @Override
+    public void onSwitch(State nextState) {
+        //// TODO: 21/08/2021  
     }
 }

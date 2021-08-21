@@ -23,6 +23,12 @@ package cc.sfclub.game.module.game;
 
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ *
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public interface State {
+    void init(OysterGame game);
+
+    void onSwitch(State nextState);
 }

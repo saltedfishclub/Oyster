@@ -19,22 +19,32 @@
  *     USA
  */
 
-package cc.sfclub.game.api;
+package cc.sfclub.game.module.game.desc;
 
-import cc.sfclub.game.Oyster;
-import cc.sfclub.game.managers.FlagManager;
-import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * Oyster APIs
+ * The type of GameScope.
+ * Also see {@link GameDescription}
  */
 @ApiStatus.AvailableSince("0.1.0")
-public class OysterAPI {
-    @Getter
-    private final FlagManager flagManager = new FlagManager();
-
-    public static OysterAPI getInstance() {
-        return Oyster.getPlugin(Oyster.class).getApi();
-    }
+public enum ScopeType {
+    /**
+     * Chunk-based games. BedWars/Bridging Practices
+     * Conflict with WORLD
+     * Compatible to SCOPELESS
+     */
+    CHUNK,
+    /**
+     * Whole Server based game, like ManHunt.
+     * Conflict with ANY CHUNK-Based Game and OTHER World-Based Game.
+     * Compatible to SCOPLESS
+     */
+    WORLD,
+    /**
+     * The games doesn't need a scope, NG Words
+     * Conflict with NOTHING
+     * Compatible to ALL
+     */
+    SCOPELESS
 }

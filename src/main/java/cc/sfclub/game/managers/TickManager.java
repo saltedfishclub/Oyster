@@ -52,7 +52,8 @@ public final class TickManager {
     @Getter
     private final Scheduler scheduler;
 
-    public TickManager(Oyster oyster) {
+    public TickManager() {
+        var oyster = Oyster.getPlugin(Oyster.class);
         this.scheduler = new SyncScheduler();
         this.adapter = new SchedulerAdapter(scheduler);
         adapter.runTaskTimer(oyster, 0L, 1L);
