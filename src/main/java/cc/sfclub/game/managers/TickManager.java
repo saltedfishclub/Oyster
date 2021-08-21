@@ -36,6 +36,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -130,5 +131,14 @@ public final class TickManager {
         return receipts.stream().map(Reference::get).filter(e -> name.equals(e.name()) && !e.isDropped()).findFirst();
     }
 
-    //todo matchesReceipt
+    /**
+     * 根据前缀或者正则匹配一批回执
+     *
+     * @param prefixOrRegex 前缀或者正则
+     * @param isRegex       是否是正则
+     * @return 可能为空的list
+     */
+    public List<? extends TickReceipt<?>> matchReceipt(String prefixOrRegex, boolean isRegex) {
+        return receipts.stream().map(Reference::get).filter(e -> e.name() != null && isRegex ? e.name().matches(prefixOrRegex) : e.name().startsWith(prefixOrRegex)).collect(Collectors.toList());
+    }
 }
