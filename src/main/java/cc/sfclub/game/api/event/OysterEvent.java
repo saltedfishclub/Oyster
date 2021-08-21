@@ -27,6 +27,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * also see {@link cc.sfclub.game.mechanic.GameEvent}
+ */
 @RequiredArgsConstructor
 public class OysterEvent extends Event {
     private final HandlerList handlerList = new HandlerList();

@@ -23,17 +23,25 @@ package cc.sfclub.game.managers;
 
 import cc.sfclub.game.mechanic.EventReactor;
 import cc.sfclub.game.mechanic.GameEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Event;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A simple event bus
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public class EventManager {
     private final List<EventReactor> subscribers = new ArrayList<>();
 
+    /**
+     * Post an event to all reactors. Not a bukkit interaction.
+     *
+     * @param event event to post
+     * @param <T>   type of event
+     * @return param
+     */
     public <T extends GameEvent> T post(T event) {
         for (EventReactor subscriber : subscribers) {
             subscriber.onEvent(event);
@@ -41,14 +49,20 @@ public class EventManager {
         return event;
     }
 
-    public void post(Event event) {
-        Bukkit.getPluginManager().callEvent(event);
-    }
-
+    /**
+     * Register a reactor.
+     *
+     * @param reactor
+     */
     public void register(EventReactor reactor) {
         subscribers.add(reactor);
     }
 
+    /**
+     * Unregister a reactor.
+     *
+     * @param reactor
+     */
     public void unregister(EventReactor reactor) {
         subscribers.remove(reactor);
     }

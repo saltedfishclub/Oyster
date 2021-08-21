@@ -30,6 +30,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -121,6 +122,6 @@ public final class TickManager {
      * @return
      */
     public Optional<? extends TickReceipt<?>> getReceipt(String name) {
-        return receipts.stream().map(e -> e.get()).filter(e -> e.name().equals(name) && !e.isDropped()).findFirst();
+        return receipts.stream().map(Reference::get).filter(e -> e.name().equals(name) && !e.isDropped()).findFirst();
     }
 }

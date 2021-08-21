@@ -34,6 +34,7 @@ import org.jetbrains.annotations.ApiStatus;
 public class OysterAPI {
     @Getter
     private final FlagManager flagManager = new FlagManager();
+    @Getter
     private final GameManager gameManager = new GameManager();
 
     public static OysterAPI getInstance() {
