@@ -13,6 +13,8 @@
 
 English | [简体中文](https://github.com/saltedfishclub/Oyster/blob/dev/README_ZHCN.md)
 
+Current Developing: 0.1-M2
+
 ## What
 
 It is a flexible framework that attempts to reduce costs for developing a game in bukkit.  
