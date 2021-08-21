@@ -72,7 +72,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     private final GameMechanic mechanic = new EmptyGameMechanic();
     @Builder.Default
     @Getter
-    private final TickManager tickManager;
+    private final TickManager tickManager = new TickManager();
     @Builder.Default
     @Getter
     private final EventManager eventBus = new EventManager();
