@@ -29,7 +29,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Fire when a game' state is changing.
+ * 当游戏GameState发生改变的时候触发。
  */
 @ApiStatus.AvailableSince("0.1.0")
 public class GameStateSwitched extends OysterEvent {

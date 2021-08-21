@@ -37,11 +37,29 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Oyster 实际的游戏对象。
+ * <p>
+ * # Game
+ * <p>
+ * 一个游戏，由参与者，阶段和状态组成。
+ * 状态是由游戏提供的(实现 {@link State})，可以用来储存数据或者别的什么东西。
+ * <p>
+ * - NG 词
+ * - ...
+ * <p>
+ * # Complex Game
+ * <p>
+ * ~~对于复杂的游戏，自然不能只有这么点东西~~
+ * 对于参与者和更加复杂的游戏规则，可以由阵营，队伍，规则与场地组成，不过他们都是可选的。
+ * 对于所有的`机能`，我们将抽象为 ` {@link cc.sfclub.game.mechanic.Mechanic} `
+ */
 @ApiStatus.AvailableSince("0.1.0")
 @Builder
 public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
@@ -126,7 +144,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     }
 
     @Override
-    public List<Flag<OysterGame>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+    public @NotNull List<Flag<OysterGame>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
         return regex ? rules.stream().filter(e -> e.getName().matches(prefixOrRegex)).collect(Collectors.toList()) : rules.stream().filter(e -> e.getName().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 }

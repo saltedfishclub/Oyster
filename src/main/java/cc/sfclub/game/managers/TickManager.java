@@ -39,7 +39,8 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * *ALL* things are synchronized.
+ * Tick 管理器，所有对于他的操作都应该是同步的。
+ * 每一个 Tick Manager 均会运行一个新的 Scheduler，请避免创建 Tick Manager。
  */
 @ApiStatus.AvailableSince("0.1.0")
 public final class TickManager {
@@ -48,7 +49,7 @@ public final class TickManager {
     private final List<WeakReference<TickReceipt<?>>> receipts = new ArrayList<>();
 
     /**
-     * Get the scheduler.
+     * 获取到Scheduler/调度器对象
      */
     @Getter
     private final Scheduler scheduler;
@@ -70,7 +71,8 @@ public final class TickManager {
     }
 
     /**
-     * Add a receipt. *Weak Reference*
+     * 添加一个 Tick 回执，弱引用储存，请自行注意GC
+     * Also see {@link TickReceipt}
      *
      * @param tickReceipt
      */
@@ -79,7 +81,8 @@ public final class TickManager {
     }
 
     /**
-     * Stream for receipts.
+     * 回执流
+     * Also see {@link TickReceipt}
      *
      * @return
      */
@@ -89,8 +92,9 @@ public final class TickManager {
     }
 
     /**
-     * Might cause {@link ClassCastException}.
-     *
+     * 可能导致 {@link ClassCastException}.
+     * 适用于你知道名字但是不确定他是否被回收的情况。
+     * Also see {@link TickReceipt}
      * @param name
      * @param typeOfT
      * @param <T>
@@ -102,9 +106,9 @@ public final class TickManager {
     }
 
     /**
-     * Find or {@link AssertionError}. Might cause {@link ClassCastException}
-     * ONLY use it when you exactly knew your receipt.
-     *
+     * 精确查找并直接返回结果，可能导致 {@link AssertionError} 或 {@link ClassCastException}
+     * **只在你完全清楚情况的情况下使用他**
+     * Also see {@link TickReceipt}
      * @param name
      * @param typeOfT
      * @param <T>
@@ -116,7 +120,8 @@ public final class TickManager {
     }
 
     /**
-     * Find a receipt by name.
+     * 通过名字查找回执，没有类型转型也不确保能找到。
+     * Also see {@link TickReceipt}
      *
      * @param name
      * @return
@@ -124,4 +129,6 @@ public final class TickManager {
     public Optional<? extends TickReceipt<?>> getReceipt(String name) {
         return receipts.stream().map(Reference::get).filter(e -> name.equals(e.name()) && !e.isDropped()).findFirst();
     }
+
+    //todo matchesReceipt
 }

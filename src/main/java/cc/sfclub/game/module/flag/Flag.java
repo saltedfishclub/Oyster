@@ -30,6 +30,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * 实际上 Oyster 里并没有阵营~~因为我们有比阵营更加灵活的东西~~
+ * 首先，你不应该把在 Oyster 中的队伍理解为*总是对立的*队伍，他们没有那么死板。在 Oyster 中，队伍只能代表一群人。
+ * 而真正起到区分队伍的实际上是 `Flag`，也就是`标签` 。通过配置标签策略，我们可以做到很多事情:
+ * <p>
+ * - 女生宿舍 4 个人 N 个群
+ * - 使用标签组合出更灵活的阵营，并且标签随时可变
+ * - 让队伍内的成员条件不对等
+ * - .....
+ * - 让有小红帽 flag 的人名字前缀加一个小绿帽
+ *
+ * @param <T>
+ */
 @ApiStatus.AvailableSince("0.1.0")
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

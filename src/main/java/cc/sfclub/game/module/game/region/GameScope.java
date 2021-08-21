@@ -22,7 +22,17 @@
 package cc.sfclub.game.module.game.region;
 
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * GameScope 是一块抽象的区域，`对于一个房间`，所有的游戏逻辑都将会在 GameScope 中发生。
+ * 这通常适用于一些小游戏，例如`搭路练习`，但并不适用于**需要较多场地和独立条件**的游戏，例如`ManiHunt`
+ * 为了使 Oyster 能够更为灵活，我们将选择的权利交给 `游戏` 而不是框架本身。Oyster 允许游戏设置对于一个服务器的 GameScope
+ * 最大承载量，并且将允许小游戏如何对场地进行划分。（区块组合，单个区块，区段，三个世界为一组，...）
+ * <p>
+ * **WIP** // TODO: 21/08/2021
+ */
+@ApiStatus.AvailableSince("0.1.0")
 public interface GameScope {
     boolean isInScope(Location location);
 

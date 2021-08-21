@@ -23,6 +23,11 @@ package cc.sfclub.game.mechanic;
 
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * 代表可以被Tick. 实现 Tickable 并不一定被 Tick，关于 Tick 策略，详见 {@link cc.sfclub.game.module.scheduler.Scheduler} and {@link cc.sfclub.game.module.scheduler.TickReceipt}
+ *
+ * @param <T>
+ */
 @ApiStatus.AvailableSince("0.1.0")
 @FunctionalInterface
 public interface Tickable<T> {

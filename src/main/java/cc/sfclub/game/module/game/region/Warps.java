@@ -21,6 +21,12 @@
 
 package cc.sfclub.game.module.game.region;
 
+import org.jetbrains.annotations.ApiStatus;
+
+/**
+ * 内置的地标类型，可能移除
+ */
+@ApiStatus.AvailableSince("0.1.0")
 public enum Warps {
     SPAWN("SPAWN"),
     LOBBY("LOBBY");

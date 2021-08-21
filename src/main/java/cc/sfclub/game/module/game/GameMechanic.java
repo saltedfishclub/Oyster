@@ -24,6 +24,9 @@ package cc.sfclub.game.module.game;
 import cc.sfclub.game.mechanic.Mechanic;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * See {@link Mechanic}
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class GameMechanic implements Mechanic<OysterGame> {
     @Override

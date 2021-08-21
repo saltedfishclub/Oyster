@@ -25,6 +25,12 @@ import cc.sfclub.game.mechanic.Flaggable;
 import cc.sfclub.game.mechanic.Tickable;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * Flag 实际起作用的点。
+ * Also see {@link Flag}
+ *
+ * @param <T>
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class FlagType<T extends Tickable<?>> implements Tickable<T> {
 

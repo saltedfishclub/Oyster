@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple event bus
+ * 轻量，简单的EventBus，也可以用来做数据通道
  */
 @ApiStatus.AvailableSince("0.1.0")
 public class EventManager {

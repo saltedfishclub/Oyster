@@ -33,6 +33,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -95,7 +96,7 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     }
 
     @Override
-    public List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+    public @NotNull List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
         return null;
     }
 

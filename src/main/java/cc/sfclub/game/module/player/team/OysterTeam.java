@@ -31,6 +31,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam>
     }
 
     @Override
-    public List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+    public @NotNull List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
         return regex ? flags.stream().filter(e -> e.getName().matches(prefixOrRegex)).collect(Collectors.toList()) : flags.stream().filter(e -> e.getName().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 

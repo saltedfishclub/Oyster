@@ -24,30 +24,35 @@ package cc.sfclub.game.module.game.desc;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * The type of GameScope.
+ * {@link cc.sfclub.game.module.game.region.GameScope} 的场地类型
  * Also see {@link GameDescription}
  */
 @ApiStatus.AvailableSince("0.1.0")
 public enum ScopeType {
     /**
-     * Chunk-based games. BedWars/Bridging Practices
-     * Conflict with WORLD
-     * Compatible to SCOPELESS
+     * 基于区块组合的地图，例如搭路练习
+     * 和 WORLD 类型冲突
+     * 和 SCOPELESS 类型兼容
      */
     CHUNK,
     /**
-     * Whole Server based game, like ManHunt.
-     * Conflict with ANY CHUNK-Based Game and OTHER World-Based Game.
-     * Compatible to SCOPLESS
+     * 基于整个服务器做游玩空间的游戏，例如 ManiHunt
+     * 于其他 WORLD 类型的游戏或任何 CHUNK 类型的游戏冲突
+     * 和 SCOPELESS 类型兼容
      */
     WORLD,
     /**
-     * The games doesn't need a scope, NG Words
-     * Conflict with NOTHING
-     * Compatible to ALL
+     * 不需要场地的游戏，比如 NG 词
+     * 和任何类型兼容
      */
     SCOPELESS;
 
+    /**
+     * 对比是否冲突
+     *
+     * @param another
+     * @return
+     */
     public boolean isConflict(ScopeType another) {
         switch (this) {
             case CHUNK:

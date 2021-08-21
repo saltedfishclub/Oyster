@@ -25,6 +25,11 @@ import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * 抽象实体。代表了可以被Tick，贴上标签，接受事件的物体
+ *
+ * @param <T>
+ */
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class OysterEntity<T> implements Flaggable, EventReactor, Tickable<T> {
     @Nullable

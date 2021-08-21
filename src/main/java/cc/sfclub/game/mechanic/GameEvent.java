@@ -26,10 +26,17 @@ import lombok.Getter;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.ApiStatus;
 
+/**
+ * 游戏事件
+ * 可以用于广播**具有针对性的**事件或者传输数据。
+ */
 @Getter
 @AllArgsConstructor
 @ApiStatus.AvailableSince("0.1.0")
 public abstract class GameEvent extends Event {
+    /**
+     * 事件发生的范围
+     */
     private final Scope scope;
 
     public enum Scope {

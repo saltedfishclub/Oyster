@@ -35,7 +35,8 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
- * Manage the games.
+ * 游戏管理器。负责组装游戏
+ * Also see {@link OysterGame}
  */
 public class GameManager {
     private static final Map<String, GameDescription> SHARED_DESCRIPTIONS = new HashMap<>();
@@ -44,7 +45,8 @@ public class GameManager {
     private final Oyster oysterPlugin = Oyster.getPlugin(Oyster.class);
 
     /**
-     * Register a prototype
+     * 注册一个游戏的原型，将会根据原型新建一个GameState注入游戏。
+     * Also see {@link cc.sfclub.game.module.game.State} and {@link GameDescription}
      *
      * @param description
      */
@@ -53,9 +55,9 @@ public class GameManager {
     }
 
     /**
-     * Launch a game into preparing state.
-     * For game's name: {@link OysterGame#getName()}
-     * For game's initialization: {@link cc.sfclub.game.module.game.State#init(OysterGame)}
+     * 启动一个游戏到准备阶段。
+     * 获取游戏的名字: {@link OysterGame#getName()}
+     * 在哪初始化这个游戏: {@link cc.sfclub.game.module.game.State#init(OysterGame)}
      *
      * @param gamePrototype prototype name
      * @return the game.
@@ -75,7 +77,7 @@ public class GameManager {
     }
 
     /**
-     * A way to interact with all games.
+     * 获取所有游戏作为流
      *
      * @return stream
      */
@@ -83,6 +85,12 @@ public class GameManager {
         return runningGames.values().stream();
     }
 
+    /**
+     * 通过名字获取原型
+     *
+     * @param name
+     * @return
+     */
     public GameDescription getPrototypeByName(String name) {
         return SHARED_DESCRIPTIONS.get(name);
     }

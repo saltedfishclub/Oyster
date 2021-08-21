@@ -29,14 +29,14 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * Manager for flagTypes
+ * 标签，标签类型管理器，全端统一
  */
 @ApiStatus.AvailableSince("0.1.0")
 public class FlagManager {
     private final Map<Class<? extends FlagType<?>>, Supplier<? extends FlagType<?>>> suppliers = new HashMap<>(64);
 
     /**
-     * Register a supplier that provides flagtype.
+     * 注册一个 FlagType Supplier
      *
      * @param clazz
      * @param supplier
@@ -49,7 +49,7 @@ public class FlagManager {
     }
 
     /**
-     * Gets a flagtype.
+     * 获取一个 FlagType
      *
      * @param type
      * @param <T>

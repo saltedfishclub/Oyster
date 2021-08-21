@@ -23,9 +23,14 @@ package cc.sfclub.game.mechanic;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
- * A event reactor.
+ * 事件处理器
  */
 @ApiStatus.AvailableSince("0.1.0")
 public interface EventReactor {
+    /**
+     * Also see {@link cc.sfclub.game.managers.EventManager} and {@link GameEvent}
+     *
+     * @param event
+     */
     void onEvent(GameEvent event);
 }
