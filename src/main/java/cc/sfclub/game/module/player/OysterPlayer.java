@@ -29,7 +29,9 @@ import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
@@ -61,7 +63,17 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     private final OysterTeam team;
     @Getter(AccessLevel.PRIVATE)
     private final Set<Flag<OysterPlayer>> sortedFlags;
+    /**
+     * 获取所属的游戏
+     */
+    @Getter
     private final OysterGame game;
+    /**
+     * 上次在线位置
+     * // TODO: 23/08/2021 改良为OysterOfflinePlayerInfo & #30 Be abstractly 隐藏实现
+     */
+    @Setter
+    private Location lastOnlineLocation = null;
 
     public OysterPlayer(UUID bukkitPlayer, PlayerMechanic mechanic, OysterTeam team, OysterGame game, Collection<Flag<OysterPlayer>> flags) {
         this.bukkitPlayer = bukkitPlayer;
@@ -139,6 +151,15 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
         return Bukkit.getPlayer(bukkitPlayer);
     }
 
+    /**
+     * 获取玩家的 UUID
+     *
+     * @return
+     */
+    public UUID getUniqueID() {
+        return bukkitPlayer;
+    }
+
     @Override
     public Set<Flag<OysterPlayer>> getFlags() {
         return sortedFlags;
@@ -157,6 +178,11 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     @Override
     public void onData(GameEvent event) {
         mechanic.onData(event);
+    }
+
+    @Nullable
+    public Location getLastOnlineLocation() {
+        return lastOnlineLocation;
     }
 
     @Nullable

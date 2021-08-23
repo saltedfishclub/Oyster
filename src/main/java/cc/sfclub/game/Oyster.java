@@ -23,12 +23,14 @@ package cc.sfclub.game;
 
 import cc.sfclub.game.api.OysterAPI;
 import cc.sfclub.game.config.OysterConfig;
+import cc.sfclub.game.listeners.JoinOrLeave;
 import cc.sfclub.game.module.i18n.LocaleLoader;
 import cc.sfclub.game.task.UpdateChecker;
 import cc.sfclub.game.util.Log;
 import cc.sfclub.game.util.SimpleConfig;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -80,6 +82,10 @@ public final class Oyster extends JavaPlugin {
 
     public OysterConfig getOysterConfig() {
         return wrappedConfig.get();
+    }
+
+    public void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(new JoinOrLeave(), this);
     }
 
     @SneakyThrows

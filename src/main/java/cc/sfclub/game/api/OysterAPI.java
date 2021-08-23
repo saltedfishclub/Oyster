@@ -24,8 +24,14 @@ package cc.sfclub.game.api;
 import cc.sfclub.game.Oyster;
 import cc.sfclub.game.managers.FlagManager;
 import cc.sfclub.game.managers.GameManager;
+import cc.sfclub.game.module.game.OysterGame;
+import cc.sfclub.game.module.player.OysterPlayer;
 import lombok.Getter;
 import org.jetbrains.annotations.ApiStatus;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Oyster APIs
@@ -39,5 +45,15 @@ public class OysterAPI {
 
     public static OysterAPI getInstance() {
         return Oyster.getPlugin(Oyster.class).getApi();
+    }
+
+    /**
+     * 根据 UUID 查找到玩家
+     *
+     * @param playerUUID
+     * @return Optional\<Player\>
+     */
+    public Optional<OysterPlayer> findByPlayer(UUID playerUUID) { //todo to be optimized by caches.
+        return gameManager.getGames().map(OysterGame::getPlayers).flatMap(Collection::stream).filter(e -> e.getUniqueID().equals(playerUUID)).findFirst();
     }
 }
