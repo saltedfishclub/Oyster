@@ -34,5 +34,5 @@ public abstract class TeamMechanic implements Mechanic<OysterTeam> {
         tick(object);
     }
 
-    public abstract void tick(OysterTeam team);
+    public abstract void tick(OysterTeam team); //todo onEvent
 }

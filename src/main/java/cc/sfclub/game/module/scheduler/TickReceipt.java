@@ -23,7 +23,9 @@ package cc.sfclub.game.module.scheduler;
 
 import cc.sfclub.game.managers.TickManager;
 import cc.sfclub.game.mechanic.Tickable;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +44,7 @@ public class TickReceipt<T> {
     private final List<AwaitingTickable<T>> always = new ArrayList<>();
     private Function<T, Boolean> requirement;
     private boolean dropped = false;
-    private String name;
+    private String name = null;
 
     /**
      * 包装。
@@ -52,6 +54,7 @@ public class TickReceipt<T> {
      * @return
      */
     public TickReceipt<T> requires(Supplier<Function<T, Boolean>> consumer) {
+        Validate.notNull(consumer);
         return requires(consumer.get());
     }
 
@@ -64,6 +67,7 @@ public class TickReceipt<T> {
      * @return
      */
     public TickReceipt<T> requires(Function<T, Boolean> func) {
+        Validate.notNull(func);
         this.requirement = func;
         return this;
     }
@@ -77,6 +81,7 @@ public class TickReceipt<T> {
      * @return 新 tickable 的回执，用于更方便的链式调用
      */
     public TickReceipt<T> alsoTicks(Tickable<T> tickable) {
+        Validate.notNull(tickable);
         var receipt = new TickReceipt<T>();
         syncs.add(new AwaitingTickable<>(tickable, receipt));
         return receipt;
@@ -90,6 +95,7 @@ public class TickReceipt<T> {
      * @return 新的回执，用于更方便的链式调用
      */
     public TickReceipt<T> alwaysTicks(Tickable<T> tickable) {
+        Validate.notNull(tickable);
         var receipt = new TickReceipt<T>();
         always.add(new AwaitingTickable<>(tickable, receipt));
         return receipt;
@@ -103,6 +109,7 @@ public class TickReceipt<T> {
      * @return 自身，用于更方便的链式调用
      */
     public TickReceipt<T> syncWith(Tickable<T> tickable) {
+        Validate.notNull(tickable);
         alsoTicks(tickable);
         return this;
     }
@@ -115,6 +122,7 @@ public class TickReceipt<T> {
      * @return 自身
      */
     public TickReceipt<T> name(String name) {
+        Validate.notNull(name);
         this.name = name;
         return this;
     }
@@ -141,6 +149,7 @@ public class TickReceipt<T> {
      *
      * @return
      */
+    @Nullable
     public String name() {
         return name;
     }

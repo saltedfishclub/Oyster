@@ -24,6 +24,7 @@ package cc.sfclub.game.module.scheduler.strategies;
 import com.google.common.collect.Lists;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class RequirementComposer<T> implements Function<T, Boolean> {
      * @return it
      */
     public static <T> RequirementComposer<T> of(Class<T> classOf, Function<T, Boolean>... func) {
+        Validate.notNull(func);
         return new RequirementComposer<>(Lists.newArrayList(func));
     }
 
@@ -68,6 +70,7 @@ public class RequirementComposer<T> implements Function<T, Boolean> {
      * @return it
      */
     public RequirementComposer<T> and(Function<T, Boolean> function) {
+        Validate.notNull(function);
         funcs.add(function);
         return this;
     }

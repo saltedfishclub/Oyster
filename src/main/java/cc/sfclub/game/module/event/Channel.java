@@ -22,6 +22,7 @@
 package cc.sfclub.game.module.event;
 
 import cc.sfclub.game.mechanic.ChannelSubscriber;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class Channel<T extends Listenable> {
      * @return param
      */
     public T post(T event) {
+        Validate.notNull(event);
         for (ChannelSubscriber<T> subscriber : subscribers) {
             subscriber.onData(event);
         }
@@ -53,6 +55,7 @@ public class Channel<T extends Listenable> {
      * @param reactor
      */
     public void register(ChannelSubscriber<T> reactor) {
+        Validate.notNull(reactor);
         subscribers.add(reactor);
     }
 
@@ -62,6 +65,7 @@ public class Channel<T extends Listenable> {
      * @param reactor
      */
     public void unregister(ChannelSubscriber<T> reactor) {
+        Validate.notNull(reactor);
         subscribers.remove(reactor);
     }
 }

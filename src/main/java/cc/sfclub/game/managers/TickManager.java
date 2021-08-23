@@ -27,6 +27,7 @@ import cc.sfclub.game.module.scheduler.SyncScheduler;
 import cc.sfclub.game.module.scheduler.TickReceipt;
 import cc.sfclub.game.task.SchedulerAdapter;
 import lombok.Getter;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -103,6 +104,8 @@ public final class TickManager {
      */
     @SuppressWarnings("all")
     public <T> Optional<? extends TickReceipt<T>> getReceipt(String name, Class<T> typeOfT) {
+        Validate.notNull(name);
+        Validate.notNull(typeOfT);
         return (Optional<? extends TickReceipt<T>>) getReceipt(name);
     }
 
@@ -117,6 +120,8 @@ public final class TickManager {
      */
     @SuppressWarnings("all")
     public <T> TickReceipt<T> getReceiptExactly(String name, Class<T> typeOfT) {
+        Validate.notNull(name);
+        Validate.notNull(typeOfT);
         return getReceipt(name, typeOfT).orElseThrow(AssertionError::new);
     }
 
@@ -128,6 +133,7 @@ public final class TickManager {
      * @return
      */
     public Optional<? extends TickReceipt<?>> getReceipt(String name) {
+        Validate.notNull(name);
         return receipts.stream().map(Reference::get).filter(e -> name.equals(e.name()) && !e.isDropped()).findFirst();
     }
 
@@ -139,6 +145,7 @@ public final class TickManager {
      * @return 可能为空的list
      */
     public List<? extends TickReceipt<?>> matchReceipt(String prefixOrRegex, boolean isRegex) {
+        Validate.notNull(prefixOrRegex);
         return receipts.stream().map(Reference::get).filter(e -> e.name() != null && isRegex ? e.name().matches(prefixOrRegex) : e.name().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 }

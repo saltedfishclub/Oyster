@@ -22,6 +22,7 @@
 package cc.sfclub.game.module.i18n;
 
 import cc.sfclub.game.util.Log;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class LocaleLoader {
      * @return locale
      */
     public static final Locale loadAsLocale(ZipFile zipFile) {
+        Validate.notNull(zipFile);
         var entries = zipFile.entries();
         Properties fallback = null;
         var locales = new HashMap<String, Properties>();

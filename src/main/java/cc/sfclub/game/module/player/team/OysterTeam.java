@@ -29,6 +29,7 @@ import cc.sfclub.game.module.player.OysterPlayer;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -82,21 +83,25 @@ public class OysterTeam implements Flaggable<OysterPlayer>, Mechanic<OysterTeam>
 
     @Override
     public void removeFlag(Flag<OysterPlayer> flag) {
+        Validate.notNull(flag);
         flags.remove(flag);
     }
 
     @Override
     public boolean addFlag(Flag<OysterPlayer> flag) {
+        Validate.notNull(flag);
         return flags.add(flag);
     }
 
     @Override
     public @Nullable Flag<OysterPlayer> getFlagExact(@NonNull String name) {
+        Validate.notNull(name);
         return flags.stream().filter(e -> e.getName().equals(name)).findFirst().orElse(null);
     }
 
     @Override
     public @NotNull List<Flag<OysterPlayer>> matchingFlags(@NonNull String prefixOrRegex, boolean regex) {
+        Validate.notNull(prefixOrRegex);
         return regex ? flags.stream().filter(e -> e.getName().matches(prefixOrRegex)).collect(Collectors.toList()) : flags.stream().filter(e -> e.getName().startsWith(prefixOrRegex)).collect(Collectors.toList());
     }
 

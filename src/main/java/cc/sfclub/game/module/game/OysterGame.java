@@ -36,6 +36,7 @@ import cc.sfclub.game.module.player.team.OysterTeam;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -140,6 +141,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
      * @return
      */
     public <T> T getStateAs(Class<T> t) {
+        Validate.notNull(t);
         return t.cast(state);
     }
 
@@ -160,6 +162,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
 
     @Override
     public void removeFlag(Flag<OysterGame> flag) {
+        Validate.notNull(flag);
         rules.remove(flag);
     }
 
@@ -169,6 +172,7 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
      * @param newState
      */
     public void switchState(State newState) {
+        Validate.notNull(newState);
         Bukkit.getPluginManager().callEvent(new GameStateSwitched(this, this.state, newState));
         newState.init(this);
         this.state.onSwitch(newState);
@@ -177,11 +181,13 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
 
     @Override
     public boolean addFlag(Flag<OysterGame> flag) {
+        Validate.notNull(flag);
         return rules.add(flag);
     }
 
     @Override
     public @Nullable Flag<OysterGame> getFlagExact(@NonNull String name) {
+        Validate.notNull(name);
         return rules.stream()
                 .filter(e -> e.getName().equals(name))
                 .findFirst().orElse(null);

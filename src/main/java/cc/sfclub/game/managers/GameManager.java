@@ -51,6 +51,7 @@ public class GameManager {
      * @param description
      */
     public void registerGamePrototype(GameDescription description) {
+        Validate.notNull(description);
         SHARED_DESCRIPTIONS.put(description.getName(), description);
     }
 
@@ -92,6 +93,7 @@ public class GameManager {
      * @return
      */
     public GameDescription getPrototypeByName(String name) {
+        Validate.notNull(name);
         return SHARED_DESCRIPTIONS.get(name);
     }
 

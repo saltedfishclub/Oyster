@@ -23,6 +23,7 @@ package cc.sfclub.game.module.i18n;
 import cc.sfclub.game.util.Log;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
@@ -55,6 +56,8 @@ public class Locale {
      */
     @Nullable
     public String translate(String locale, Object... keyAndArgs) {
+        Validate.notNull(locale);
+        Validate.notNull(keyAndArgs);
         if (keyAndArgs.length < 1) {
             Log.warn("Misuse of transInfo(...)!");
             return null;
@@ -79,6 +82,8 @@ public class Locale {
      * @param locale 语言文本
      */
     public void registerLocale(String lang, Properties locale) {
+        Validate.notNull(locale);
+        Validate.notNull(lang);
         if (locales.containsKey(lang)) {
             Log.warn("Duplicate locale was found! " + lang);
         }

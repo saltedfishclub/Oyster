@@ -28,6 +28,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -75,6 +76,9 @@ public class Flag<T extends Tickable<?>> {
     }
 
     public static <T extends Tickable<?>> Flag<T> of(String name, int priority, Strategy strategy, boolean disable, Class<FlagType<T>> flagTypeClass) {
+        Validate.notNull(name);
+        Validate.notNull(strategy);
+        Validate.notNull(flagTypeClass);
         return new Flag<T>(name, priority, strategy, disable, OysterAPI.getInstance().getFlagManager().ofType(flagTypeClass));
     }
 

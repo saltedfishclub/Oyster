@@ -22,6 +22,7 @@
 package cc.sfclub.game.managers;
 
 import cc.sfclub.game.module.flag.FlagType;
+import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
@@ -44,6 +45,8 @@ public class FlagManager {
      * @return
      */
     public <T extends FlagType<?>> FlagManager registerSupplier(Class<T> clazz, Supplier<T> supplier) {
+        Validate.notNull(supplier);
+        Validate.notNull(clazz);
         suppliers.put(clazz, supplier);
         return this;
     }
@@ -56,6 +59,7 @@ public class FlagManager {
      * @return
      */
     public <T extends FlagType<?>> T ofType(Class<T> type) {
+        Validate.notNull(type);
         return (T) suppliers.getOrDefault(type, () -> null).get();
     }
 }
