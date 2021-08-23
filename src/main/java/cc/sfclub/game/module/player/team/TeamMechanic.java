@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.module.player.team;
 
+import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.mechanic.Mechanic;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -34,5 +35,12 @@ public abstract class TeamMechanic implements Mechanic<OysterTeam> {
         tick(object);
     }
 
-    public abstract void tick(OysterTeam team); //todo onEvent
+    @Override
+    public void onData(GameEvent event) {
+        this.onEvent(event);
+    }
+
+    public abstract void onEvent(GameEvent event);
+
+    public abstract void tick(OysterTeam team);
 }

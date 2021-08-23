@@ -21,6 +21,7 @@
 
 package cc.sfclub.game.module.game;
 
+import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.mechanic.Mechanic;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -34,6 +35,13 @@ public abstract class GameMechanic implements Mechanic<OysterGame> {
         object.getRules().forEach(e -> e.getType().tick(object));
         tick(object);
     }
+
+    @Override
+    public void onData(GameEvent event) {
+        this.onEvent(event);
+    }
+
+    public abstract void onEvent(GameEvent event);
 
     public abstract void tick(OysterGame game);
 }

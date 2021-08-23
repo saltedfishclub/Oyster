@@ -20,6 +20,7 @@
  */
 package cc.sfclub.game.module.player;
 
+import cc.sfclub.game.mechanic.GameEvent;
 import cc.sfclub.game.mechanic.Mechanic;
 import cc.sfclub.game.mechanic.OysterEntity;
 import org.jetbrains.annotations.ApiStatus;
@@ -33,6 +34,13 @@ public abstract class PlayerMechanic extends OysterEntity<OysterPlayer> implemen
     public final void onUpdate(OysterPlayer object) {
         tick(object);
     }
+
+    @Override
+    public void onData(GameEvent event) {
+        this.onEvent(event);
+    }
+
+    public abstract void onEvent(GameEvent event);
 
     public abstract void tick(OysterPlayer player);
 }

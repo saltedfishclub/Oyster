@@ -151,6 +151,11 @@ public class OysterGame extends GameMechanic implements Flaggable<OysterGame> {
     }
 
     @Override
+    public void onEvent(GameEvent event) {
+        mechanic.onEvent(event);
+    }
+
+    @Override
     public void tick(OysterGame game) {
         mechanic.onUpdate(game);
     }
