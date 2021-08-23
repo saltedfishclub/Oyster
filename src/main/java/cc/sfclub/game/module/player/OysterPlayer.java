@@ -166,12 +166,12 @@ public class OysterPlayer extends OysterEntity<OysterPlayer> {
     }
 
     @Override
-    public void removeFlag(Flag flag) {
+    public void removeFlag(Flag<OysterPlayer> flag) {
         sortedFlags.remove(flag);
     }
 
     @Override
-    public boolean addFlag(Flag flag) {
+    public boolean addFlag(Flag<OysterPlayer> flag) {
         return sortedFlags.add(flag);
     }
 
