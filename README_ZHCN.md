@@ -2,7 +2,7 @@
   <img width="190" height="210" align="left" src="https://i.loli.net/2021/08/05/4jx57ETzLJPMncg.jpg" alt="Logo"/>
   <br />
   <h1>牡蛎~~~</h1>
-  <p><a href="https://github.com/saltedfishclub/Oni">Oni</a>的子项目，一个专注于小游戏的开发框架。<a href="https://jq.qq.com/?_wv=1027&k=NStiaxZz">QQ 群</a><br />
+  <p><a href="https://github.com/saltedfishclub/Oni">Oni</a>的子项目，一个专注于小游戏的开发框架。
     <img src="https://img.shields.io/github/license/saltedfishclub/Oyster">
     <img src="https://img.shields.io/github/workflow/status/saltedfishclub/Oni/Java%20CI%20with%20Gradle"> 
     <img src="https://img.shields.io/discord/612522451200638991">
